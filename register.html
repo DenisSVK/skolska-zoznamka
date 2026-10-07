@@ -115,6 +115,13 @@
             color: #694653;
             margin-bottom: 20px;
         }
+
+        .message {
+            margin-top: 15px;
+            text-align: center;
+            font-size: 14px;
+            font-weight: bold;
+        }
     </style>
 </head>
 
@@ -138,7 +145,7 @@
             🔒 Tvoje heslo nebude verejne zobrazené.
         </div>
 
-        <form>
+        <form id="registerForm">
 
             <label for="firstName">
                 Meno
@@ -196,6 +203,8 @@
 
         </form>
 
+        <div id="message" class="message"></div>
+
         <div class="login">
             Už máš účet?
             <a href="login.html">
@@ -206,6 +215,66 @@
     </div>
 
 </div>
+
+<script>
+document.getElementById("registerForm").addEventListener("submit", async function(event) {
+
+    event.preventDefault();
+
+    const firstName = document.getElementById("firstName").value.trim();
+    const lastName = document.getElementById("lastName").value.trim();
+    const password = document.getElementById("password").value;
+    const password2 = document.getElementById("password2").value;
+    const message = document.getElementById("message");
+
+    message.textContent = "";
+
+    if (password !== password2) {
+        message.textContent = "Heslá sa nezhodujú.";
+        return;
+    }
+
+    if (password.length < 8) {
+        message.textContent = "Heslo musí mať aspoň 8 znakov.";
+        return;
+    }
+
+    try {
+
+        const response = await fetch("/api/register", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                firstName: firstName,
+                lastName: lastName,
+                password: password
+            })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            message.textContent = data.error || "Registrácia sa nepodarila.";
+            return;
+        }
+
+        message.textContent = "Účet bol úspešne vytvorený! 💗";
+
+        setTimeout(function() {
+            window.location.href = "login.html";
+        }, 1200);
+
+    } catch (error) {
+
+        message.textContent =
+            "Nastala chyba pri komunikácii so serverom.";
+
+    }
+
+});
+</script>
 
 </body>
 </html>
