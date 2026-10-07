@@ -71,7 +71,6 @@
             border-radius: 22px;
             padding: 30px;
             box-shadow: 0 10px 30px rgba(80, 30, 50, 0.08);
-            margin-bottom: 25px;
         }
 
         .avatar-section {
@@ -333,8 +332,8 @@
             >
 
             <div class="hint">
-                Môžeš napísať vlastné záujmy. Napríklad:
-                hudba, futbal, Minecraft, filmy.
+                Napíš svoje záujmy, napríklad:
+                futbal, hudba, Minecraft, filmy.
             </div>
 
             <label for="instagram">
@@ -370,6 +369,11 @@ const profileImageInput = document.getElementById("profileImage");
 const avatarImage = document.getElementById("avatarImage");
 const avatarEmoji = document.getElementById("avatarEmoji");
 
+let profileImageData = "";
+
+
+/* Náhľad profilovej fotky */
+
 profileImageInput.addEventListener("change", function() {
 
     const file = this.files[0];
@@ -378,11 +382,24 @@ profileImageInput.addEventListener("change", function() {
         return;
     }
 
+    if (!file.type.startsWith("image/")) {
+        alert("Vyber prosím obrázok.");
+        return;
+    }
+
+    if (file.size > 2 * 1024 * 1024) {
+        alert("Profilová fotka môže mať maximálne 2 MB.");
+        this.value = "";
+        return;
+    }
+
     const reader = new FileReader();
 
     reader.onload = function(event) {
 
-        avatarImage.src = event.target.result;
+        profileImageData = event.target.result;
+
+        avatarImage.src = profileImageData;
         avatarImage.style.display = "block";
         avatarEmoji.style.display = "none";
 
@@ -393,16 +410,146 @@ profileImageInput.addEventListener("change", function() {
 });
 
 
-document.getElementById("profileForm").addEventListener("submit", function(event) {
+/* Načítanie existujúceho profilu */
 
-    event.preventDefault();
+async function loadProfile() {
 
-    const message = document.getElementById("message");
+    try {
 
-    message.textContent =
-        "Profil je pripravený na uloženie. Napojenie na databázu spravíme v ďalšom kroku.";
+        const response = await fetch("/api/profile");
 
-});
+        if (!response.ok) {
+            return;
+        }
+
+        const data = await response.json();
+
+        if (!data.profile) {
+            return;
+        }
+
+        const profile = data.profile;
+
+        document.getElementById("username").value =
+            profile.username || "";
+
+        document.getElementById("class").value =
+            profile.class_name || "";
+
+        document.getElementById("bio").value =
+            profile.bio || "";
+
+        document.getElementById("interests").value =
+            profile.interests || "";
+
+        document.getElementById("instagram").value =
+            profile.instagram || "";
+
+        if (profile.profile_image) {
+
+            profileImageData = profile.profile_image;
+
+            avatarImage.src = profile.profile_image;
+            avatarImage.style.display = "block";
+            avatarEmoji.style.display = "none";
+        }
+
+    } catch (error) {
+
+        console.error(error);
+
+    }
+
+}
+
+
+/* Uloženie profilu */
+
+document.getElementById("profileForm").addEventListener(
+    "submit",
+    async function(event) {
+
+        event.preventDefault();
+
+        const message = document.getElementById("message");
+
+        const username =
+            document.getElementById("username").value.trim();
+
+        const className =
+            document.getElementById("class").value;
+
+        const bio =
+            document.getElementById("bio").value.trim();
+
+        const interests =
+            document.getElementById("interests").value.trim();
+
+        const instagram =
+            document.getElementById("instagram").value.trim();
+
+        if (!username || !className) {
+
+            message.textContent =
+                "Vyplň prezývku a vyber triedu.";
+
+            return;
+        }
+
+        message.textContent = "Ukladám profil...";
+
+        try {
+
+            const response = await fetch("/api/profile", {
+
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+
+                    username: username,
+                    className: className,
+                    bio: bio,
+                    interests: interests,
+                    instagram: instagram,
+                    profileImage: profileImageData
+
+                })
+
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+
+                message.textContent =
+                    data.error || "Profil sa nepodarilo uložiť.";
+
+                return;
+            }
+
+            message.textContent =
+                "Profil bol úspešne uložený! 💗";
+
+        } catch (error) {
+
+            console.error(error);
+
+            message.textContent =
+                "Nastala chyba pri komunikácii so serverom.";
+
+        }
+
+    }
+);
+
+
+/* Spustenie načítania profilu */
+
+loadProfile();
 
 </script>
 
