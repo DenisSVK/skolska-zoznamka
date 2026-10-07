@@ -1,233 +1,654 @@
 <!DOCTYPE html>
 <html lang="sk">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chat 💗</title>
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Chat | Školská Zoznamka</title>
 
     <style>
+
         * {
             box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
         body {
-            margin: 0;
             font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #fff0f6, #ffd6e7);
+            background: #fff5f8;
+            color: #3d2630;
             min-height: 100vh;
-            color: #333;
         }
 
         nav {
+            height: 70px;
             background: white;
-            padding: 18px 30px;
+            border-bottom: 1px solid #f3dce5;
+
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+            justify-content: space-between;
+
+            padding: 0 7%;
+
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
         .logo {
+            color: #e75480;
             font-size: 22px;
             font-weight: bold;
-            color: #e75480;
         }
 
-        nav a {
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .nav-links a {
             text-decoration: none;
-            color: #555;
-            margin-left: 18px;
-            font-weight: bold;
+            color: #694653;
+            font-size: 14px;
         }
 
-        .container {
-            max-width: 700px;
-            margin: 40px auto;
-            padding: 20px;
-        }
-
-        .chat {
-            background: white;
-            border-radius: 25px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
-
-        .chat-header {
-            padding: 20px;
-            border-bottom: 1px solid #eee;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .avatar {
-            width: 55px;
-            height: 55px;
-            border-radius: 50%;
-            background: #ffd6e7;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 28px;
-        }
-
-        .chat-header h2 {
-            margin: 0;
+        .nav-links a:hover {
             color: #e75480;
         }
 
-        .chat-header p {
-            margin: 5px 0 0;
-            color: #888;
-        }
+        .menu-button {
+            display: none;
 
-        .messages {
-            padding: 25px;
-            min-height: 400px;
-            background: #fff9fb;
-        }
-
-        .message {
-            max-width: 70%;
-            padding: 12px 16px;
-            margin-bottom: 15px;
-            border-radius: 18px;
-            line-height: 1.4;
-        }
-
-        .received {
-            background: #f0f0f0;
-            margin-right: auto;
-        }
-
-        .sent {
-            background: #e75480;
-            color: white;
-            margin-left: auto;
-        }
-
-        .time {
-            font-size: 11px;
-            opacity: 0.6;
-            margin-top: 5px;
-        }
-
-        .input-area {
-            padding: 15px;
-            display: flex;
-            gap: 10px;
-            border-top: 1px solid #eee;
-        }
-
-        .input-area input {
-            flex: 1;
-            padding: 14px;
-            border: 1px solid #ddd;
-            border-radius: 15px;
-            font-size: 15px;
-            outline: none;
-        }
-
-        .input-area button {
-            background: #e75480;
-            color: white;
             border: none;
-            border-radius: 15px;
-            padding: 0 20px;
-            font-weight: bold;
+            background: #fff0f6;
+            color: #e75480;
+
+            font-size: 24px;
+
+            padding: 8px 12px;
+
+            border-radius: 12px;
+
             cursor: pointer;
         }
 
-        .back {
-            display: inline-block;
-            margin-bottom: 15px;
-            color: #e75480;
-            text-decoration: none;
+        .page {
+            max-width: 700px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .heading {
+            margin-bottom: 25px;
+        }
+
+        .heading h1 {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .heading p {
+            color: #80616d;
+        }
+
+        .chat-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .chat-item {
+            width: 100%;
+
+            background: white;
+
+            border: none;
+
+            border-radius: 18px;
+
+            padding: 15px;
+
+            display: flex;
+            align-items: center;
+
+            gap: 14px;
+
+            text-align: left;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 5px 20px
+                rgba(80, 30, 50, 0.06);
+
+            transition: 0.15s;
+        }
+
+        .chat-item:hover {
+            transform: translateY(-1px);
+            box-shadow:
+                0 8px 25px
+                rgba(80, 30, 50, 0.10);
+        }
+
+        .avatar {
+            width: 58px;
+            height: 58px;
+
+            border-radius: 50%;
+
+            background: #ffd6e7;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 28px;
+
+            overflow: hidden;
+
+            flex-shrink: 0;
+        }
+
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .chat-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .top-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 5px;
+        }
+
+        .username {
+            font-size: 17px;
             font-weight: bold;
         }
 
-        @media (max-width: 600px) {
-            nav {
-                padding: 15px;
-            }
-
-            nav a {
-                margin-left: 8px;
-                font-size: 13px;
-            }
-
-            .container {
-                margin: 20px auto;
-                padding: 10px;
-            }
-
-            .message {
-                max-width: 85%;
-            }
+        .time {
+            color: #a18a92;
+            font-size: 11px;
+            white-space: nowrap;
         }
+
+        .class-name {
+            color: #e75480;
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+
+        .last-message {
+            color: #80616d;
+            font-size: 14px;
+
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .empty {
+            background: white;
+
+            border-radius: 20px;
+
+            padding: 50px 25px;
+
+            text-align: center;
+
+            box-shadow:
+                0 8px 25px
+                rgba(80, 30, 50, 0.08);
+        }
+
+        .empty-icon {
+            font-size: 55px;
+            margin-bottom: 15px;
+        }
+
+        .empty h2 {
+            margin-bottom: 10px;
+        }
+
+        .empty p {
+            color: #80616d;
+            line-height: 1.5;
+        }
+
+        .status {
+            background: white;
+
+            border-radius: 20px;
+
+            padding: 35px 25px;
+
+            text-align: center;
+
+            color: #80616d;
+
+            box-shadow:
+                0 8px 25px
+                rgba(80, 30, 50, 0.08);
+        }
+
+        .error {
+            color: #c43e68;
+        }
+
+        @media (max-width: 600px) {
+
+            nav {
+                padding: 0 20px;
+            }
+
+            .logo {
+                font-size: 18px;
+            }
+
+            .menu-button {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+
+                position: absolute;
+
+                top: 70px;
+                left: 15px;
+                right: 15px;
+
+                background: white;
+
+                flex-direction: column;
+                align-items: stretch;
+
+                gap: 0;
+
+                padding: 10px;
+
+                border-radius: 16px;
+
+                box-shadow:
+                    0 10px 30px
+                    rgba(80, 30, 50, 0.15);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links a {
+                padding: 15px;
+                border-radius: 10px;
+                font-size: 15px;
+            }
+
+            .nav-links a:hover {
+                background: #fff0f6;
+            }
+
+            .page {
+                margin-top: 25px;
+                padding: 0 15px;
+            }
+
+            .heading h1 {
+                font-size: 28px;
+            }
+
+        }
+
     </style>
+
 </head>
 
 <body>
 
 <nav>
-    <div class="logo">💗 Školská Zoznamka</div>
 
-    <div>
-        <a href="discover.html">Objavovať</a>
-        <a href="matches.html">Matchy</a>
-        <a href="profile.html">Profil</a>
+    <div class="logo">
+        💗 Školská Zoznamka
     </div>
+
+    <button
+        class="menu-button"
+        id="menuButton"
+        type="button"
+    >
+        ☰
+    </button>
+
+    <div
+        class="nav-links"
+        id="navLinks"
+    >
+
+        <a href="discover.html">
+            🔎 Objavovať
+        </a>
+
+        <a href="matches.html">
+            💗 Matchy
+        </a>
+
+        <a href="chat.html">
+            💬 Chat
+        </a>
+
+        <a href="profile.html">
+            👤 Profil
+        </a>
+
+        <a href="settings.html">
+            ⚙️ Nastavenia
+        </a>
+
+    </div>
+
 </nav>
 
-<div class="container">
 
-    <a href="matches.html" class="back">← Späť na matchy</a>
+<div class="page">
 
-    <div class="chat">
+    <div class="heading">
 
-        <div class="chat-header">
-            <div class="avatar">😊</div>
+        <h1>
+            Tvoje chaty 💬
+        </h1>
 
-            <div>
-                <h2>Sofia</h2>
-                <p>2.B • online</p>
-            </div>
-        </div>
+        <p>
+            Tu nájdeš svoje konverzácie.
+        </p>
 
-        <div class="messages">
+    </div>
 
-            <div class="message received">
-                Ahoj! 😊
-                <div class="time">18:32</div>
-            </div>
 
-            <div class="message sent">
-                Ahoj! Ako sa máš? 💗
-                <div class="time">18:33</div>
-            </div>
+    <div
+        class="chat-list"
+        id="chatList"
+    >
 
-            <div class="message received">
-                Dobre, ďakujem! Čo ty?
-                <div class="time">18:34</div>
-            </div>
-
-            <div class="message sent">
-                Tiež dobre 😄
-                <div class="time">18:35</div>
-            </div>
-
-        </div>
-
-        <div class="input-area">
-            <input type="text" placeholder="Napíš správu...">
-            <button>Odoslať</button>
+        <div class="status">
+            ⏳ Načítavam chaty...
         </div>
 
     </div>
 
 </div>
 
+
+<script>
+
+const menuButton =
+    document.getElementById("menuButton");
+
+const navLinks =
+    document.getElementById("navLinks");
+
+const chatList =
+    document.getElementById("chatList");
+
+
+menuButton.addEventListener(
+    "click",
+    function() {
+
+        navLinks.classList.toggle("active");
+
+    }
+);
+
+
+function escapeHtml(value) {
+
+    if (!value) {
+        return "";
+    }
+
+    return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+
+}
+
+
+function formatTime(value) {
+
+    if (!value) {
+        return "";
+    }
+
+    const date =
+        new Date(value);
+
+    if (Number.isNaN(date.getTime())) {
+        return "";
+    }
+
+    return date.toLocaleDateString(
+        "sk-SK",
+        {
+            day: "2-digit",
+            month: "2-digit"
+        }
+    );
+
+}
+
+
+function renderChats(conversations) {
+
+    if (
+        !conversations ||
+        conversations.length === 0
+    ) {
+
+        chatList.innerHTML = `
+
+            <div class="empty">
+
+                <div class="empty-icon">
+                    💬
+                </div>
+
+                <h2>
+                    Zatiaľ nemáš žiadne chaty
+                </h2>
+
+                <p>
+                    Keď si s niekým vytvoríš vzájomný match
+                    a začneš konverzáciu, zobrazí sa tu.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+    }
+
+
+    chatList.innerHTML = "";
+
+
+    conversations.forEach(chat => {
+
+        const item =
+            document.createElement("button");
+
+        item.type = "button";
+
+        item.className = "chat-item";
+
+
+        let avatar = "😊";
+
+
+        if (chat.profile_image) {
+
+            avatar = `
+
+                <img
+                    src="${escapeHtml(chat.profile_image)}"
+                    alt="Profilová fotka"
+                >
+
+            `;
+
+        }
+
+
+        const message =
+            chat.last_message
+            || "Zatiaľ žiadne správy";
+
+
+        item.innerHTML = `
+
+            <div class="avatar">
+                ${avatar}
+            </div>
+
+            <div class="chat-info">
+
+                <div class="top-row">
+
+                    <div class="username">
+                        ${escapeHtml(chat.username)}
+                    </div>
+
+                    <div class="time">
+                        ${formatTime(chat.last_message_time)}
+                    </div>
+
+                </div>
+
+                <div class="class-name">
+                    ${escapeHtml(chat.class_name || "")}
+                </div>
+
+                <div class="last-message">
+                    ${escapeHtml(message)}
+                </div>
+
+            </div>
+
+        `;
+
+
+        item.addEventListener(
+            "click",
+            function() {
+
+                window.location.href =
+                    "conversation.html?id="
+                    + encodeURIComponent(
+                        chat.conversation_id
+                    );
+
+            }
+        );
+
+
+        chatList.appendChild(item);
+
+    });
+
+}
+
+
+async function loadChats() {
+
+    chatList.innerHTML = `
+
+        <div class="status">
+            ⏳ Načítavam chaty...
+        </div>
+
+    `;
+
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/conversations"
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            chatList.innerHTML = `
+
+                <div class="status error">
+
+                    ❌
+                    ${escapeHtml(
+                        data.error ||
+                        "Chaty sa nepodarilo načítať."
+                    )}
+
+                </div>
+
+            `;
+
+            return;
+        }
+
+
+        renderChats(
+            data.conversations
+        );
+
+
+    } catch (error) {
+
+        console.error(error);
+
+
+        chatList.innerHTML = `
+
+            <div class="status error">
+
+                ❌ Nepodarilo sa spojiť so serverom.
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+loadChats();
+
+</script>
+
 </body>
+
 </html>
