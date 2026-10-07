@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Môj profil | Školská Zoznamka</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            min-height: 100vh;
+            background: #fff5f8;
+            color: #3d2630;
+        }
+
+        nav {
+            height: 70px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 7%;
+            border-bottom: 1px solid #f3dce5;
+        }
+
+        .logo {
+            color: #e75480;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #694653;
+            font-size: 14px;
+        }
+
+        .page {
+            max-width: 850px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .title {
+            margin-bottom: 25px;
+        }
+
+        .title h1 {
+            font-size: 34px;
+        }
+
+        .title p {
+            color: #80616d;
+            margin-top: 7px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 22px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(80, 30, 50, 0.08);
+            margin-bottom: 25px;
+        }
+
+        .avatar {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            background: #ffd6e7;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 7px;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            border: 1px solid #ead5de;
+            border-radius: 12px;
+            padding: 13px;
+            font-size: 15px;
+            margin-bottom: 18px;
+            font-family: inherit;
+            outline: none;
+        }
+
+        textarea {
+            min-height: 110px;
+            resize: vertical;
+        }
+
+        input:focus,
+        textarea:focus {
+            border-color: #e75480;
+        }
+
+        .interests {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 18px;
+        }
+
+        .interest {
+            background: #fff0f6;
+            color: #c43e68;
+            padding: 8px 13px;
+            border-radius: 20px;
+            font-size: 13px;
+        }
+
+        .save {
+            border: none;
+            background: #e75480;
+            color: white;
+            padding: 14px 25px;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        @media (max-width: 600px) {
+            nav {
+                padding: 0 20px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .page {
+                margin-top: 25px;
+            }
+
+            .card {
+                padding: 22px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<nav>
+
+    <div class="logo">
+        💗 Školská Zoznamka
+    </div>
+
+    <div class="nav-links">
+        <a href="discover.html">Objavovať</a>
+        <a href="matches.html">Matchy</a>
+        <a href="chat.html">Chat</a>
+    </div>
+
+</nav>
+
+<div class="page">
+
+    <div class="title">
+        <h1>Môj profil 👤</h1>
+        <p>Takto ťa môžu vidieť ostatní používatelia.</p>
+    </div>
+
+    <div class="card">
+
+        <div class="avatar">
+            😊
+        </div>
+
+        <label for="username">Prezývka</label>
+
+        <input
+            id="username"
+            type="text"
+            placeholder="Ako ťa máme zobrazovať?"
+        >
+
+        <label for="class">Trieda</label>
+
+        <input
+            id="class"
+            type="text"
+            placeholder="Napr. 2.B"
+        >
+
+        <label for="bio">O mne</label>
+
+        <textarea
+            id="bio"
+            placeholder="Napíš niečo o sebe..."
+        ></textarea>
+
+        <label>Moje záujmy</label>
+
+        <div class="interests">
+            <span class="interest">🎵 Hudba</span>
+            <span class="interest">🎬 Filmy</span>
+            <span class="interest">🎮 Hry</span>
+            <span class="interest">🏀 Šport</span>
+        </div>
+
+        <button class="save">
+            Uložiť profil 💗
+        </button>
+
+    </div>
+
+</div>
+
+</body>
+</html>
