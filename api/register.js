@@ -1,6 +1,14 @@
 import { neon } from "@neondatabase/serverless";
+import crypto from "crypto";
 
 const sql = neon(process.env.DATABASE_URL);
+
+function hashPassword(password) {
+    return crypto
+        .createHash("sha256")
+        .update(password)
+        .digest("hex");
+}
 
 export default async function handler(req, res) {
     if (req.method !== "POST") {
@@ -24,13 +32,39 @@ export default async function handler(req, res) {
             });
         }
 
-        return res.status(200).json({
-            message: "Dáta boli prijaté."
+        const passwordHash = hashPassword(password);
+
+        const result = await sql`
+            INSERT INTO users (
+                first_name,
+                last_name,
+                password_hash
+            )
+            VALUES (
+                ${firstName},
+                ${lastName},
+                ${passwordHash}
+            )
+            RETURNING id, first_name, last_name
+        `;
+
+        return res.status(201).json({
+            message: "Účet bol vytvorený.",
+            user: result[0]
         });
 
     } catch (error) {
+
+        if (error.code === "23505") {
+            return res.status(409).json({
+                error: "Používateľ s týmto menom a priezviskom už existuje."
+            });
+        }
+
+        console.error(error);
+
         return res.status(500).json({
-            error: "Chyba servera."
+            error: "Nepodarilo sa vytvoriť účet."
         });
     }
 }
