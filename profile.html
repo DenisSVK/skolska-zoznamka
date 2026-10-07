@@ -21,12 +21,12 @@
         }
 
         nav {
-            height: 70px;
+            min-height: 70px;
             background: white;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 7%;
+            padding: 15px 7%;
             border-bottom: 1px solid #f3dce5;
         }
 
@@ -74,16 +74,48 @@
             margin-bottom: 25px;
         }
 
+        .avatar-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
         .avatar {
-            width: 110px;
-            height: 110px;
+            width: 130px;
+            height: 130px;
             border-radius: 50%;
             background: #ffd6e7;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 48px;
-            margin-bottom: 25px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: none;
+        }
+
+        .avatar span {
+            font-size: 55px;
+        }
+
+        .upload-label {
+            background: #fff0f6;
+            color: #c43e68;
+            padding: 10px 17px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        #profileImage {
+            display: none;
         }
 
         label {
@@ -94,7 +126,8 @@
         }
 
         input,
-        textarea {
+        textarea,
+        select {
             width: 100%;
             border: 1px solid #ead5de;
             border-radius: 12px;
@@ -103,6 +136,7 @@
             margin-bottom: 18px;
             font-family: inherit;
             outline: none;
+            background: white;
         }
 
         textarea {
@@ -111,23 +145,16 @@
         }
 
         input:focus,
-        textarea:focus {
+        textarea:focus,
+        select:focus {
             border-color: #e75480;
         }
 
-        .interests {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
+        .hint {
+            color: #8b6875;
+            font-size: 12px;
+            margin-top: -10px;
             margin-bottom: 18px;
-        }
-
-        .interest {
-            background: #fff0f6;
-            color: #c43e68;
-            padding: 8px 13px;
-            border-radius: 20px;
-            font-size: 13px;
         }
 
         .save {
@@ -138,11 +165,22 @@
             border-radius: 25px;
             font-weight: bold;
             cursor: pointer;
+            font-size: 15px;
+        }
+
+        .save:hover {
+            opacity: 0.9;
+        }
+
+        .message {
+            margin-top: 15px;
+            font-size: 14px;
+            font-weight: bold;
         }
 
         @media (max-width: 600px) {
             nav {
-                padding: 0 20px;
+                padding: 15px 20px;
             }
 
             .nav-links {
@@ -186,49 +224,187 @@
 
     <div class="card">
 
-        <div class="avatar">
-            😊
-        </div>
+        <form id="profileForm">
 
-        <label for="username">Prezývka</label>
+            <div class="avatar-section">
 
-        <input
-            id="username"
-            type="text"
-            placeholder="Ako ťa máme zobrazovať?"
-        >
+                <div class="avatar">
 
-        <label for="class">Trieda</label>
+                    <span id="avatarEmoji">😊</span>
 
-        <input
-            id="class"
-            type="text"
-            placeholder="Napr. 2.B"
-        >
+                    <img id="avatarImage" alt="Profilová fotka">
 
-        <label for="bio">O mne</label>
+                </div>
 
-        <textarea
-            id="bio"
-            placeholder="Napíš niečo o sebe..."
-        ></textarea>
+                <label for="profileImage" class="upload-label">
+                    📷 Vybrať profilovú fotku
+                </label>
 
-        <label>Moje záujmy</label>
+                <input
+                    id="profileImage"
+                    type="file"
+                    accept="image/*"
+                >
 
-        <div class="interests">
-            <span class="interest">🎵 Hudba</span>
-            <span class="interest">🎬 Filmy</span>
-            <span class="interest">🎮 Hry</span>
-            <span class="interest">🏀 Šport</span>
-        </div>
+            </div>
 
-        <button class="save">
-            Uložiť profil 💗
-        </button>
+            <label for="username">
+                Prezývka
+            </label>
+
+            <input
+                id="username"
+                type="text"
+                maxlength="50"
+                placeholder="Ako ťa máme zobrazovať?"
+                required
+            >
+
+            <label for="class">
+                Trieda
+            </label>
+
+            <select id="class" required>
+
+                <option value="">
+                    Vyber svoju triedu
+                </option>
+
+                <optgroup label="1. ročník">
+                    <option value="1.A">1.A</option>
+                    <option value="1.B">1.B</option>
+                    <option value="1.C">1.C</option>
+                    <option value="1.D">1.D</option>
+                    <option value="1.E">1.E</option>
+                    <option value="1.J">1.J</option>
+                    <option value="1.S">1.S</option>
+                </optgroup>
+
+                <optgroup label="2. ročník">
+                    <option value="2.A">2.A</option>
+                    <option value="2.B">2.B</option>
+                    <option value="2.C">2.C</option>
+                    <option value="2.D">2.D</option>
+                    <option value="2.E">2.E</option>
+                    <option value="2.J">2.J</option>
+                    <option value="2.S">2.S</option>
+                </optgroup>
+
+                <optgroup label="3. ročník">
+                    <option value="3.A">3.A</option>
+                    <option value="3.B">3.B</option>
+                    <option value="3.C">3.C</option>
+                    <option value="3.D">3.D</option>
+                    <option value="3.J">3.J</option>
+                </optgroup>
+
+                <optgroup label="4. ročník">
+                    <option value="4.A">4.A</option>
+                    <option value="4.B">4.B</option>
+                    <option value="4.C">4.C</option>
+                    <option value="4.D">4.D</option>
+                </optgroup>
+
+                <optgroup label="5. ročník">
+                    <option value="5.A">5.A</option>
+                </optgroup>
+
+            </select>
+
+            <label for="bio">
+                O mne
+            </label>
+
+            <textarea
+                id="bio"
+                maxlength="500"
+                placeholder="Napíš niečo o sebe..."
+            ></textarea>
+
+            <label for="interests">
+                Moje záujmy
+            </label>
+
+            <input
+                id="interests"
+                type="text"
+                maxlength="300"
+                placeholder="Napr. futbal, hudba, hry, filmy..."
+            >
+
+            <div class="hint">
+                Môžeš napísať vlastné záujmy. Napríklad:
+                hudba, futbal, Minecraft, filmy.
+            </div>
+
+            <label for="instagram">
+                Instagram <span style="font-weight: normal;">(voliteľné)</span>
+            </label>
+
+            <input
+                id="instagram"
+                type="text"
+                maxlength="100"
+                placeholder="@tvojinstagram"
+            >
+
+            <div class="hint">
+                Instagram nemusíš vyplniť.
+            </div>
+
+            <button class="save" type="submit">
+                Uložiť profil 💗
+            </button>
+
+            <div id="message" class="message"></div>
+
+        </form>
 
     </div>
 
 </div>
+
+<script>
+
+const profileImageInput = document.getElementById("profileImage");
+const avatarImage = document.getElementById("avatarImage");
+const avatarEmoji = document.getElementById("avatarEmoji");
+
+profileImageInput.addEventListener("change", function() {
+
+    const file = this.files[0];
+
+    if (!file) {
+        return;
+    }
+
+    const reader = new FileReader();
+
+    reader.onload = function(event) {
+
+        avatarImage.src = event.target.result;
+        avatarImage.style.display = "block";
+        avatarEmoji.style.display = "none";
+
+    };
+
+    reader.readAsDataURL(file);
+
+});
+
+
+document.getElementById("profileForm").addEventListener("submit", function(event) {
+
+    event.preventDefault();
+
+    const message = document.getElementById("message");
+
+    message.textContent =
+        "Profil je pripravený na uloženie. Napojenie na databázu spravíme v ďalšom kroku.";
+
+});
+
+</script>
 
 </body>
 </html>
