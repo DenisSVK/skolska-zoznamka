@@ -28,6 +28,7 @@
             justify-content: space-between;
             padding: 15px 7%;
             border-bottom: 1px solid #f3dce5;
+            position: relative;
         }
 
         .logo {
@@ -36,15 +37,35 @@
             font-weight: bold;
         }
 
+        /* DESKTOP MENU */
+
         .nav-links {
             display: flex;
             gap: 20px;
+            align-items: center;
         }
 
         .nav-links a {
             text-decoration: none;
             color: #694653;
             font-size: 14px;
+        }
+
+        .nav-links a:hover {
+            color: #e75480;
+        }
+
+        /* MOBILE MENU BUTTON */
+
+        .menu-button {
+            display: none;
+            border: none;
+            background: #fff0f6;
+            color: #e75480;
+            font-size: 24px;
+            padding: 8px 12px;
+            border-radius: 12px;
+            cursor: pointer;
         }
 
         .page {
@@ -177,17 +198,59 @@
             font-weight: bold;
         }
 
+        /* MOBIL */
+
         @media (max-width: 600px) {
+
             nav {
                 padding: 15px 20px;
             }
 
+            .logo {
+                font-size: 18px;
+            }
+
+            .menu-button {
+                display: block;
+            }
+
             .nav-links {
                 display: none;
+                position: absolute;
+                top: 70px;
+                right: 15px;
+                left: 15px;
+                background: white;
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0;
+                padding: 10px;
+                border-radius: 16px;
+                box-shadow: 0 10px 30px rgba(80, 30, 50, 0.15);
+                z-index: 1000;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links a {
+                padding: 15px;
+                border-radius: 10px;
+                font-size: 15px;
+            }
+
+            .nav-links a:hover {
+                background: #fff0f6;
             }
 
             .page {
                 margin-top: 25px;
+                padding: 0 15px;
+            }
+
+            .title h1 {
+                font-size: 28px;
             }
 
             .card {
@@ -205,21 +268,60 @@
         💗 Školská Zoznamka
     </div>
 
-    <div class="nav-links">
-        <a href="discover.html">Objavovať</a>
-        <a href="matches.html">Matchy</a>
-        <a href="chat.html">Chat</a>
-        <a href="settings.html">Nastavenia</a>
+    <!-- Tlačidlo pre mobil -->
+
+    <button
+        class="menu-button"
+        id="menuButton"
+        type="button"
+        aria-label="Otvoriť menu"
+    >
+        ☰
+    </button>
+
+    <!-- Navigácia -->
+
+    <div class="nav-links" id="navLinks">
+
+        <a href="discover.html">
+            🔎 Objavovať
+        </a>
+
+        <a href="matches.html">
+            💗 Matchy
+        </a>
+
+        <a href="chat.html">
+            💬 Chat
+        </a>
+
+        <a href="profile.html">
+            👤 Profil
+        </a>
+
+        <a href="settings.html">
+            ⚙️ Nastavenia
+        </a>
+
     </div>
 
 </nav>
 
+
 <div class="page">
 
     <div class="title">
-        <h1>Môj profil 👤</h1>
-        <p>Takto ťa môžu vidieť ostatní používatelia.</p>
+
+        <h1>
+            Môj profil 👤
+        </h1>
+
+        <p>
+            Takto ťa môžu vidieť ostatní používatelia.
+        </p>
+
     </div>
+
 
     <div class="card">
 
@@ -229,13 +331,21 @@
 
                 <div class="avatar">
 
-                    <span id="avatarEmoji">😊</span>
+                    <span id="avatarEmoji">
+                        😊
+                    </span>
 
-                    <img id="avatarImage" alt="Profilová fotka">
+                    <img
+                        id="avatarImage"
+                        alt="Profilová fotka"
+                    >
 
                 </div>
 
-                <label for="profileImage" class="upload-label">
+                <label
+                    for="profileImage"
+                    class="upload-label"
+                >
                     📷 Vybrať profilovú fotku
                 </label>
 
@@ -246,6 +356,7 @@
                 >
 
             </div>
+
 
             <label for="username">
                 Prezývka
@@ -259,17 +370,22 @@
                 required
             >
 
+
             <label for="class">
                 Trieda
             </label>
 
-            <select id="class" required>
+            <select
+                id="class"
+                required
+            >
 
                 <option value="">
                     Vyber svoju triedu
                 </option>
 
                 <optgroup label="1. ročník">
+
                     <option value="1.A">1.A</option>
                     <option value="1.B">1.B</option>
                     <option value="1.C">1.C</option>
@@ -277,9 +393,12 @@
                     <option value="1.E">1.E</option>
                     <option value="1.J">1.J</option>
                     <option value="1.S">1.S</option>
+
                 </optgroup>
 
+
                 <optgroup label="2. ročník">
+
                     <option value="2.A">2.A</option>
                     <option value="2.B">2.B</option>
                     <option value="2.C">2.C</option>
@@ -287,28 +406,39 @@
                     <option value="2.E">2.E</option>
                     <option value="2.J">2.J</option>
                     <option value="2.S">2.S</option>
+
                 </optgroup>
 
+
                 <optgroup label="3. ročník">
+
                     <option value="3.A">3.A</option>
                     <option value="3.B">3.B</option>
                     <option value="3.C">3.C</option>
                     <option value="3.D">3.D</option>
                     <option value="3.J">3.J</option>
+
                 </optgroup>
 
+
                 <optgroup label="4. ročník">
+
                     <option value="4.A">4.A</option>
                     <option value="4.B">4.B</option>
                     <option value="4.C">4.C</option>
                     <option value="4.D">4.D</option>
+
                 </optgroup>
 
+
                 <optgroup label="5. ročník">
+
                     <option value="5.A">5.A</option>
+
                 </optgroup>
 
             </select>
+
 
             <label for="bio">
                 O mne
@@ -319,6 +449,7 @@
                 maxlength="500"
                 placeholder="Napíš niečo o sebe..."
             ></textarea>
+
 
             <label for="interests">
                 Moje záujmy
@@ -336,8 +467,12 @@
                 futbal, hudba, Minecraft, filmy.
             </div>
 
+
             <label for="instagram">
-                Instagram <span style="font-weight: normal;">(voliteľné)</span>
+                Instagram
+                <span style="font-weight: normal;">
+                    (voliteľné)
+                </span>
             </label>
 
             <input
@@ -351,11 +486,18 @@
                 Instagram nemusíš vyplniť.
             </div>
 
-            <button class="save" type="submit">
+
+            <button
+                class="save"
+                type="submit"
+            >
                 Uložiť profil 💗
             </button>
 
-            <div id="message" class="message"></div>
+            <div
+                id="message"
+                class="message"
+            ></div>
 
         </form>
 
@@ -363,95 +505,167 @@
 
 </div>
 
+
 <script>
 
-const profileImageInput = document.getElementById("profileImage");
-const avatarImage = document.getElementById("avatarImage");
-const avatarEmoji = document.getElementById("avatarEmoji");
+/* ================================
+   MOBILNÉ MENU
+================================ */
 
-let profileImageData = "";
+const menuButton =
+    document.getElementById("menuButton");
+
+const navLinks =
+    document.getElementById("navLinks");
 
 
-/* Náhľad profilovej fotky */
+menuButton.addEventListener("click", function() {
 
-profileImageInput.addEventListener("change", function() {
-
-    const file = this.files[0];
-
-    if (!file) {
-        return;
-    }
-
-    if (!file.type.startsWith("image/")) {
-        alert("Vyber prosím obrázok.");
-        return;
-    }
-
-    if (file.size > 2 * 1024 * 1024) {
-        alert("Profilová fotka môže mať maximálne 2 MB.");
-        this.value = "";
-        return;
-    }
-
-    const reader = new FileReader();
-
-    reader.onload = function(event) {
-
-        profileImageData = event.target.result;
-
-        avatarImage.src = profileImageData;
-        avatarImage.style.display = "block";
-        avatarEmoji.style.display = "none";
-
-    };
-
-    reader.readAsDataURL(file);
+    navLinks.classList.toggle("active");
 
 });
 
 
-/* Načítanie existujúceho profilu */
+/* ================================
+   PROFILOVÁ FOTKA
+================================ */
+
+const profileImageInput =
+    document.getElementById("profileImage");
+
+const avatarImage =
+    document.getElementById("avatarImage");
+
+const avatarEmoji =
+    document.getElementById("avatarEmoji");
+
+let profileImageData = "";
+
+
+profileImageInput.addEventListener(
+    "change",
+    function() {
+
+        const file = this.files[0];
+
+        if (!file) {
+            return;
+        }
+
+
+        if (!file.type.startsWith("image/")) {
+
+            alert("Vyber prosím obrázok.");
+
+            this.value = "";
+
+            return;
+        }
+
+
+        if (file.size > 2 * 1024 * 1024) {
+
+            alert(
+                "Profilová fotka môže mať maximálne 2 MB."
+            );
+
+            this.value = "";
+
+            return;
+        }
+
+
+        const reader =
+            new FileReader();
+
+
+        reader.onload = function(event) {
+
+            profileImageData =
+                event.target.result;
+
+            avatarImage.src =
+                profileImageData;
+
+            avatarImage.style.display =
+                "block";
+
+            avatarEmoji.style.display =
+                "none";
+
+        };
+
+
+        reader.readAsDataURL(file);
+
+    }
+);
+
+
+/* ================================
+   NAČÍTANIE PROFILU
+================================ */
 
 async function loadProfile() {
 
     try {
 
-        const response = await fetch("/api/profile");
+        const response =
+            await fetch("/api/profile");
+
 
         if (!response.ok) {
             return;
         }
 
-        const data = await response.json();
+
+        const data =
+            await response.json();
+
 
         if (!data.profile) {
             return;
         }
 
-        const profile = data.profile;
+
+        const profile =
+            data.profile;
+
 
         document.getElementById("username").value =
             profile.username || "";
 
+
         document.getElementById("class").value =
             profile.class_name || "";
+
 
         document.getElementById("bio").value =
             profile.bio || "";
 
+
         document.getElementById("interests").value =
             profile.interests || "";
+
 
         document.getElementById("instagram").value =
             profile.instagram || "";
 
+
         if (profile.profile_image) {
 
-            profileImageData = profile.profile_image;
+            profileImageData =
+                profile.profile_image;
 
-            avatarImage.src = profile.profile_image;
-            avatarImage.style.display = "block";
-            avatarEmoji.style.display = "none";
+            avatarImage.src =
+                profile.profile_image;
+
+            avatarImage.style.display =
+                "block";
+
+            avatarEmoji.style.display =
+                "none";
+
         }
 
     } catch (error) {
@@ -463,91 +677,143 @@ async function loadProfile() {
 }
 
 
-/* Uloženie profilu */
+/* ================================
+   ULOŽENIE PROFILU
+================================ */
 
-document.getElementById("profileForm").addEventListener(
-    "submit",
-    async function(event) {
+document
+    .getElementById("profileForm")
+    .addEventListener(
+        "submit",
+        async function(event) {
 
-        event.preventDefault();
+            event.preventDefault();
 
-        const message = document.getElementById("message");
 
-        const username =
-            document.getElementById("username").value.trim();
+            const message =
+                document.getElementById("message");
 
-        const className =
-            document.getElementById("class").value;
 
-        const bio =
-            document.getElementById("bio").value.trim();
+            const username =
+                document
+                    .getElementById("username")
+                    .value
+                    .trim();
 
-        const interests =
-            document.getElementById("interests").value.trim();
 
-        const instagram =
-            document.getElementById("instagram").value.trim();
+            const className =
+                document
+                    .getElementById("class")
+                    .value;
 
-        if (!username || !className) {
 
-            message.textContent =
-                "Vyplň prezývku a vyber triedu.";
+            const bio =
+                document
+                    .getElementById("bio")
+                    .value
+                    .trim();
 
-            return;
-        }
 
-        message.textContent = "Ukladám profil...";
+            const interests =
+                document
+                    .getElementById("interests")
+                    .value
+                    .trim();
 
-        try {
 
-            const response = await fetch("/api/profile", {
+            const instagram =
+                document
+                    .getElementById("instagram")
+                    .value
+                    .trim();
 
-                method: "POST",
 
-                headers: {
-                    "Content-Type": "application/json"
-                },
-
-                body: JSON.stringify({
-
-                    username: username,
-                    className: className,
-                    bio: bio,
-                    interests: interests,
-                    instagram: instagram,
-                    profileImage: profileImageData
-
-                })
-
-            });
-
-            const data = await response.json();
-
-            if (!response.ok) {
+            if (!username || !className) {
 
                 message.textContent =
-                    data.error || "Profil sa nepodarilo uložiť.";
+                    "Vyplň prezývku a vyber triedu.";
 
                 return;
             }
 
-            message.textContent =
-                "Profil bol úspešne uložený! 💗";
-
-        } catch (error) {
-
-            console.error(error);
 
             message.textContent =
-                "Nastala chyba pri komunikácii so serverom.";
+                "Ukladám profil...";
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        "/api/profile",
+                        {
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json"
+                            },
+
+                            body: JSON.stringify({
+
+                                username:
+                                    username,
+
+                                className:
+                                    className,
+
+                                bio:
+                                    bio,
+
+                                interests:
+                                    interests,
+
+                                instagram:
+                                    instagram,
+
+                                profileImage:
+                                    profileImageData
+
+                            })
+                        }
+                    );
+
+
+                const data =
+                    await response.json();
+
+
+                if (!response.ok) {
+
+                    message.textContent =
+                        data.error ||
+                        "Profil sa nepodarilo uložiť.";
+
+                    return;
+                }
+
+
+                message.textContent =
+                    "Profil bol úspešne uložený! 💗";
+
+
+            } catch (error) {
+
+                console.error(error);
+
+
+                message.textContent =
+                    "Nastala chyba pri komunikácii so serverom.";
+
+            }
 
         }
-
-    }
-);
+    );
 
 
-/* Spustenie načítania profilu */
+/* ================================
+   SPUSTENIE
+================================ */
 
 loadProfile();
 
