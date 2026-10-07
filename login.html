@@ -1,1 +1,158 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <title>Prihlásenie | Školská Zoznamka</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #fff0f6, #ffd6e7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 25px;
+            color: #3d2630;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 440px;
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 24px;
+            font-weight: bold;
+            color: #e75480;
+        }
+
+        .card {
+            background: white;
+            border-radius: 25px;
+            padding: 35px;
+            box-shadow: 0 15px 40px rgba(80, 30, 50, 0.12);
+        }
+
+        h1 {
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+
+        .description {
+            color: #80616d;
+            margin-bottom: 28px;
+            line-height: 1.5;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 7px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid #ead5de;
+            border-radius: 13px;
+            font-size: 16px;
+            margin-bottom: 18px;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #e75480;
+        }
+
+        button {
+            width: 100%;
+            border: none;
+            background: #e75480;
+            color: white;
+            padding: 15px;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .register {
+            text-align: center;
+            margin-top: 22px;
+            font-size: 14px;
+            color: #80616d;
+        }
+
+        .register a {
+            color: #e75480;
+            font-weight: bold;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="logo">
+        💗 Školská Zoznamka
+    </div>
+
+    <div class="card">
+
+        <h1>Vitaj späť 👋</h1>
+
+        <p class="description">
+            Prihlás sa a pokračuj v objavovaní ľudí z tvojej školy.
+        </p>
+
+        <form>
+
+            <label for="email">E-mail</label>
+
+            <input
+                type="email"
+                id="email"
+                placeholder="tvoj@email.sk"
+                required
+            >
+
+            <label for="password">Heslo</label>
+
+            <input
+                type="password"
+                id="password"
+                placeholder="Tvoje heslo"
+                required
+            >
+
+            <button type="submit">
+                Prihlásiť sa 💗
+            </button>
+
+        </form>
+
+        <div class="register">
+            Ešte nemáš účet?
+            <a href="register.html">Vytvoriť účet</a>
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>
