@@ -11,19 +11,21 @@ return match ? match[1] : null;
 export default async function handler(req, res) {
 
 ```
-const userId = getUserId(req);
-
-if (!userId) {
-    return res.status(401).json({
-        error: "Nie si prihlásený."
-    });
-}
-
 try {
 
-    /*
-     * Vymažeme správy staršie ako 24 hodín.
-     */
+    const userId = getUserId(req);
+
+    if (!userId) {
+        return res.status(401).json({
+            error: "Nie si prihlásený."
+        });
+    }
+
+
+    /* =========================
+       AUTOMATICKÉ MAZANIE
+       SPRÁV STARŠÍCH AKO 24 HODÍN
+    ========================= */
 
     await sql`
         DELETE FROM messages
@@ -31,9 +33,9 @@ try {
     `;
 
 
-    /*
-     * NAČÍTANIE SPRÁV
-     */
+    /* =========================
+       GET - NAČÍTANIE SPRÁV
+    ========================= */
 
     if (req.method === "GET") {
 
@@ -68,11 +70,7 @@ try {
                 sender_id,
                 message,
                 created_at,
-                CASE
-                    WHEN sender_id = ${userId}
-                    THEN true
-                    ELSE false
-                END AS is_mine
+                (sender_id = ${userId}) AS is_mine
             FROM messages
             WHERE conversation_id = ${conversationId}
             ORDER BY created_at ASC
@@ -84,13 +82,16 @@ try {
     }
 
 
-    /*
-     * ODOSLANIE SPRÁVY
-     */
+    /* =========================
+       POST - ODOSLANIE SPRÁVY
+    ========================= */
 
     if (req.method === "POST") {
 
-        const { conversationId, message } = req.body || {};
+        const body = req.body || {};
+
+        const conversationId = body.conversationId;
+        const message = body.message;
 
         if (!conversationId) {
             return res.status(400).json({
@@ -106,7 +107,7 @@ try {
 
         const cleanMessage = String(message).trim();
 
-        if (!cleanMessage) {
+        if (cleanMessage.length === 0) {
             return res.status(400).json({
                 error: "Správa nemôže byť prázdna."
             });
@@ -119,10 +120,9 @@ try {
         }
 
 
-        /*
-         * Overíme, či používateľ patrí
-         * do daného chatu.
-         */
+        /* =========================
+           KONTROLA CHATU
+        ========================= */
 
         const conversation = await sql`
             SELECT id
@@ -142,9 +142,9 @@ try {
         }
 
 
-        /*
-         * Uložíme správu.
-         */
+        /* =========================
+           ULOŽENIE SPRÁVY
+        ========================= */
 
         const result = await sql`
             INSERT INTO messages (
@@ -164,6 +164,7 @@ try {
                 created_at
         `;
 
+
         return res.status(201).json({
             message: result[0]
         });
@@ -176,10 +177,11 @@ try {
 
 } catch (error) {
 
-    console.error("MESSAGE API ERROR:", error);
+    console.error("API MESSAGES ERROR:", error);
 
     return res.status(500).json({
-        error: "Nepodarilo sa pracovať so správami."
+        error: "Nepodarilo sa odoslať správu.",
+        details: error.message
     });
 }
 ```
