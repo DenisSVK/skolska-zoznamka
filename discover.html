@@ -1,17 +1,26 @@
+
 <!DOCTYPE html>
 <html lang="sk">
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>Objavuj | Školská Zoznamka</title>
 
+
     <style>
+
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
+
 
         body {
             font-family: Arial, sans-serif;
@@ -20,18 +29,27 @@
             min-height: 100vh;
         }
 
+
+        /* =========================
+           NAVIGÁCIA
+        ========================= */
+
         nav {
             height: 70px;
             background: white;
             border-bottom: 1px solid #f3dce5;
+
             display: flex;
             align-items: center;
             justify-content: space-between;
+
             padding: 0 7%;
+
             position: sticky;
             top: 0;
-            z-index: 10;
+            z-index: 100;
         }
+
 
         .logo {
             color: #e75480;
@@ -39,10 +57,13 @@
             font-weight: bold;
         }
 
+
         .nav-links {
             display: flex;
             gap: 20px;
+            align-items: center;
         }
+
 
         .nav-links a {
             text-decoration: none;
@@ -50,37 +71,78 @@
             font-size: 14px;
         }
 
+
+        .nav-links a:hover {
+            color: #e75480;
+        }
+
+
+        .menu-button {
+            display: none;
+
+            border: none;
+            background: #fff0f6;
+            color: #e75480;
+
+            font-size: 24px;
+
+            padding: 8px 12px;
+
+            border-radius: 12px;
+
+            cursor: pointer;
+        }
+
+
+        /* =========================
+           STRÁNKA
+        ========================= */
+
         .page {
             max-width: 700px;
             margin: 35px auto;
             padding: 0 20px;
         }
 
+
         .heading {
             margin-bottom: 25px;
         }
+
 
         .heading h1 {
             font-size: 32px;
             margin-bottom: 8px;
         }
 
+
         .heading p {
             color: #80616d;
         }
 
+
+        /* =========================
+           FILTRE
+        ========================= */
+
         .filters {
             background: white;
             border-radius: 18px;
+
             padding: 18px;
+
             margin-bottom: 25px;
-            box-shadow: 0 5px 20px rgba(80, 30, 50, 0.06);
+
+            box-shadow:
+                0 5px 20px rgba(80, 30, 50, 0.06);
         }
+
 
         .filters-title {
             font-weight: bold;
             margin-bottom: 12px;
         }
+
 
         .filter-row {
             display: flex;
@@ -88,16 +150,70 @@
             flex-wrap: wrap;
         }
 
-        select {
+
+        select,
+        input {
             flex: 1;
+
             min-width: 150px;
+
             padding: 11px 13px;
+
             border: 1px solid #ead5de;
+
             border-radius: 12px;
+
             background: white;
+
             color: #694653;
+
             font-size: 14px;
+
+            outline: none;
         }
+
+
+        select:focus,
+        input:focus {
+            border-color: #e75480;
+        }
+
+
+        .filter-button {
+            border: none;
+
+            background: #e75480;
+            color: white;
+
+            padding: 11px 18px;
+
+            border-radius: 12px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+
+        .reset-button {
+            border: none;
+
+            background: #fff0f6;
+            color: #c43e68;
+
+            padding: 11px 18px;
+
+            border-radius: 12px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+
+        /* =========================
+           FEED
+        ========================= */
 
         .feed {
             display: flex;
@@ -105,39 +221,68 @@
             gap: 25px;
         }
 
+
         .post {
             background: white;
+
             border-radius: 20px;
+
             overflow: hidden;
-            box-shadow: 0 8px 25px rgba(80, 30, 50, 0.08);
+
+            box-shadow:
+                0 8px 25px rgba(80, 30, 50, 0.08);
         }
+
 
         .post-header {
             display: flex;
+
             align-items: center;
+
             gap: 12px;
+
             padding: 18px;
         }
 
+
         .avatar {
-            width: 48px;
-            height: 48px;
+            width: 52px;
+            height: 52px;
+
             border-radius: 50%;
+
             background: #ffd6e7;
+
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 24px;
+
+            font-size: 25px;
+
+            overflow: hidden;
+
+            flex-shrink: 0;
         }
+
+
+        .avatar img {
+            width: 100%;
+            height: 100%;
+
+            object-fit: cover;
+        }
+
 
         .user-info {
             flex: 1;
         }
 
+
         .username {
             font-weight: bold;
-            font-size: 16px;
+            font-size: 17px;
         }
+
 
         .class-name {
             color: #e75480;
@@ -145,18 +290,40 @@
             margin-top: 3px;
         }
 
+
         .post-image {
             height: 330px;
-            background: linear-gradient(135deg, #ffd6e7, #ffeef5);
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #ffd6e7,
+                    #ffeef5
+                );
+
             display: flex;
+
             align-items: center;
             justify-content: center;
+
             font-size: 100px;
+
+            overflow: hidden;
         }
+
+
+        .post-image img {
+            width: 100%;
+            height: 100%;
+
+            object-fit: cover;
+        }
+
 
         .post-content {
             padding: 18px;
         }
+
 
         .post-actions {
             display: flex;
@@ -164,18 +331,27 @@
             margin-bottom: 12px;
         }
 
+
         .post-actions button {
             border: none;
             background: none;
+
             font-size: 24px;
+
             cursor: pointer;
         }
 
+
         .post-text {
             line-height: 1.5;
+
             color: #694653;
+
             margin-bottom: 14px;
+
+            white-space: pre-wrap;
         }
+
 
         .interests {
             display: flex;
@@ -183,44 +359,178 @@
             gap: 8px;
         }
 
+
         .interest {
             background: #fff0f6;
             color: #c43e68;
+
             padding: 7px 11px;
+
             border-radius: 20px;
+
             font-size: 12px;
         }
 
-        .profile-link {
+
+        .instagram {
             display: inline-block;
+
             margin-top: 15px;
+
             color: #e75480;
+
             text-decoration: none;
+
             font-weight: bold;
+
             font-size: 14px;
         }
 
+
+        /* =========================
+           STAVY
+        ========================= */
+
+        .status {
+            background: white;
+
+            border-radius: 18px;
+
+            padding: 25px;
+
+            text-align: center;
+
+            color: #80616d;
+
+            box-shadow:
+                0 5px 20px rgba(80, 30, 50, 0.06);
+        }
+
+
+        .loading {
+            font-size: 16px;
+        }
+
+
+        .empty {
+            font-size: 15px;
+        }
+
+
+        .error {
+            color: #c43e68;
+        }
+
+
+        /* =========================
+           MOBIL
+        ========================= */
+
         @media (max-width: 600px) {
+
             nav {
                 padding: 0 20px;
             }
 
+
+            .logo {
+                font-size: 18px;
+            }
+
+
+            .menu-button {
+                display: block;
+            }
+
+
             .nav-links {
                 display: none;
+
+                position: absolute;
+
+                top: 70px;
+
+                right: 15px;
+                left: 15px;
+
+                background: white;
+
+                flex-direction: column;
+
+                align-items: stretch;
+
+                gap: 0;
+
+                padding: 10px;
+
+                border-radius: 16px;
+
+                box-shadow:
+                    0 10px 30px rgba(80, 30, 50, 0.15);
             }
+
+
+            .nav-links.active {
+                display: flex;
+            }
+
+
+            .nav-links a {
+                padding: 15px;
+
+                border-radius: 10px;
+
+                font-size: 15px;
+            }
+
+
+            .nav-links a:hover {
+                background: #fff0f6;
+            }
+
 
             .page {
                 margin-top: 25px;
+                padding: 0 15px;
             }
+
+
+            .heading h1 {
+                font-size: 28px;
+            }
+
+
+            .filter-row {
+                flex-direction: column;
+            }
+
+
+            select,
+            input,
+            .filter-button,
+            .reset-button {
+                width: 100%;
+                flex: none;
+            }
+
 
             .post-image {
                 height: 270px;
             }
+
         }
+
     </style>
+
 </head>
 
+
 <body>
+
+
+<!-- =========================
+     NAVIGÁCIA
+========================= -->
 
 <nav>
 
@@ -228,169 +538,612 @@
         💗 Školská Zoznamka
     </div>
 
-    <div class="nav-links">
-        <a href="profile.html">Môj profil</a>
-        <a href="matches.html">Matchy</a>
-        <a href="chat.html">Chat</a>
-        <a href="settings.html">Nastavenia</a>
+
+    <button
+        class="menu-button"
+        id="menuButton"
+        type="button"
+        aria-label="Otvoriť menu"
+    >
+        ☰
+    </button>
+
+
+    <div
+        class="nav-links"
+        id="navLinks"
+    >
+
+        <a href="discover.html">
+            🔎 Objavovať
+        </a>
+
+        <a href="matches.html">
+            💗 Matchy
+        </a>
+
+        <a href="chat.html">
+            💬 Chat
+        </a>
+
+        <a href="profile.html">
+            👤 Profil
+        </a>
+
+        <a href="settings.html">
+            ⚙️ Nastavenia
+        </a>
+
     </div>
 
 </nav>
 
+
 <div class="page">
 
+
+    <!-- =========================
+         NADPIS
+    ========================= -->
+
     <div class="heading">
-        <h1>Objavuj 👀</h1>
-        <p>Spoznaj ľudí z tvojej školy a pozri sa, čo ich baví.</p>
+
+        <h1>
+            Objavuj 👀
+        </h1>
+
+        <p>
+            Spoznaj ľudí z tvojej školy
+            a pozri sa, čo ich baví.
+        </p>
+
     </div>
+
+
+    <!-- =========================
+         FILTRE
+    ========================= -->
 
     <div class="filters">
 
         <div class="filters-title">
-            🔎 Filtrovať
+            🔎 Filtrovať profily
         </div>
+
 
         <div class="filter-row">
 
-            <select>
-                <option>Všetky triedy</option>
-                <option>1.A</option>
-                <option>1.B</option>
-                <option>2.A</option>
-                <option>2.B</option>
-                <option>3.A</option>
-                <option>3.B</option>
-                <option>4.A</option>
-                <option>4.B</option>
+            <select id="classFilter">
+
+                <option value="">
+                    Všetky triedy
+                </option>
+
+
+                <optgroup label="1. ročník">
+
+                    <option value="1.A">1.A</option>
+                    <option value="1.B">1.B</option>
+                    <option value="1.C">1.C</option>
+                    <option value="1.D">1.D</option>
+                    <option value="1.E">1.E</option>
+                    <option value="1.J">1.J</option>
+                    <option value="1.S">1.S</option>
+
+                </optgroup>
+
+
+                <optgroup label="2. ročník">
+
+                    <option value="2.A">2.A</option>
+                    <option value="2.B">2.B</option>
+                    <option value="2.C">2.C</option>
+                    <option value="2.D">2.D</option>
+                    <option value="2.E">2.E</option>
+                    <option value="2.J">2.J</option>
+                    <option value="2.S">2.S</option>
+
+                </optgroup>
+
+
+                <optgroup label="3. ročník">
+
+                    <option value="3.A">3.A</option>
+                    <option value="3.B">3.B</option>
+                    <option value="3.C">3.C</option>
+                    <option value="3.D">3.D</option>
+                    <option value="3.J">3.J</option>
+
+                </optgroup>
+
+
+                <optgroup label="4. ročník">
+
+                    <option value="4.A">4.A</option>
+                    <option value="4.B">4.B</option>
+                    <option value="4.C">4.C</option>
+                    <option value="4.D">4.D</option>
+
+                </optgroup>
+
+
+                <optgroup label="5. ročník">
+
+                    <option value="5.A">5.A</option>
+
+                </optgroup>
+
             </select>
 
-            <select>
-                <option>Všetky záujmy</option>
-                <option>🎵 Hudba</option>
-                <option>🎬 Filmy</option>
-                <option>🎮 Hry</option>
-                <option>🏀 Šport</option>
-                <option>✈️ Cestovanie</option>
-            </select>
+
+            <input
+                id="interestFilter"
+                type="text"
+                placeholder="🔎 Záujem, napr. futbal"
+            >
+
+
+            <button
+                class="filter-button"
+                id="filterButton"
+                type="button"
+            >
+                Filtrovať
+            </button>
+
+
+            <button
+                class="reset-button"
+                id="resetButton"
+                type="button"
+            >
+                Zrušiť
+            </button>
 
         </div>
 
     </div>
 
-    <div class="feed">
 
-        <!-- PRÍSPEVOK 1 -->
+    <!-- =========================
+         PROFILY
+    ========================= -->
 
-        <div class="post">
+    <div
+        class="feed"
+        id="feed"
+    >
 
-            <div class="post-header">
-
-                <div class="avatar">
-                    😊
-                </div>
-
-                <div class="user-info">
-                    <div class="username">
-                        Sofia
-                    </div>
-
-                    <div class="class-name">
-                        2.B
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="post-image">
-                😊
-            </div>
-
-            <div class="post-content">
-
-                <div class="post-actions">
-                    <button>♡</button>
-                    <button>💬</button>
-                </div>
-
-                <div class="post-text">
-                    Milujem hudbu, filmy a trávenie času
-                    s kamarátmi. Vždy som za dobrý výlet
-                    alebo koncert. 🎵
-                </div>
-
-                <div class="interests">
-                    <span class="interest">🎵 Hudba</span>
-                    <span class="interest">🎬 Filmy</span>
-                    <span class="interest">🏐 Volejbal</span>
-                    <span class="interest">✈️ Cestovanie</span>
-                </div>
-
-                <a href="profile.html" class="profile-link">
-                    Zobraziť profil →
-                </a>
-
-            </div>
-
-        </div>
-
-
-        <!-- PRÍSPEVOK 2 -->
-
-        <div class="post">
-
-            <div class="post-header">
-
-                <div class="avatar">
-                    😎
-                </div>
-
-                <div class="user-info">
-
-                    <div class="username">
-                        Alex
-                    </div>
-
-                    <div class="class-name">
-                        3.A
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div class="post-image">
-                🎮
-            </div>
-
-            <div class="post-content">
-
-                <div class="post-actions">
-                    <button>♡</button>
-                    <button>💬</button>
-                </div>
-
-                <div class="post-text">
-                    Vo voľnom čase hrám hry, počúvam hudbu
-                    a rád objavujem nové miesta. 🎮
-                </div>
-
-                <div class="interests">
-                    <span class="interest">🎮 Hry</span>
-                    <span class="interest">🎵 Hudba</span>
-                    <span class="interest">🌍 Cestovanie</span>
-                </div>
-
-                <a href="profile.html" class="profile-link">
-                    Zobraziť profil →
-                </a>
-
-            </div>
-
+        <div class="status loading">
+            ⏳ Načítavam profily...
         </div>
 
     </div>
+
 
 </div>
+
+
+<script>
+
+/* =================================
+   MOBILNÉ MENU
+================================= */
+
+const menuButton =
+    document.getElementById("menuButton");
+
+const navLinks =
+    document.getElementById("navLinks");
+
+
+menuButton.addEventListener(
+    "click",
+    function() {
+
+        navLinks.classList.toggle("active");
+
+    }
+);
+
+
+/* =================================
+   ELEMENTY
+================================= */
+
+const feed =
+    document.getElementById("feed");
+
+const classFilter =
+    document.getElementById("classFilter");
+
+const interestFilter =
+    document.getElementById("interestFilter");
+
+const filterButton =
+    document.getElementById("filterButton");
+
+const resetButton =
+    document.getElementById("resetButton");
+
+
+/* =================================
+   ESCAPE HTML
+   Ochrana pri zobrazovaní údajov
+================================= */
+
+function escapeHtml(value) {
+
+    if (!value) {
+        return "";
+    }
+
+    return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+
+}
+
+
+/* =================================
+   ROZDELENIE ZÁUJMOV
+================================= */
+
+function createInterests(text) {
+
+    if (!text) {
+
+        return `
+            <span class="interest">
+                Zatiaľ bez záujmov
+            </span>
+        `;
+
+    }
+
+
+    const interests =
+        text
+            .split(",")
+            .map(item => item.trim())
+            .filter(item => item.length > 0);
+
+
+    return interests
+        .map(item => {
+
+            return `
+                <span class="interest">
+                    ${escapeHtml(item)}
+                </span>
+            `;
+
+        })
+        .join("");
+
+}
+
+
+/* =================================
+   VYKRESLENIE PROFILOV
+================================= */
+
+function renderProfiles(profiles) {
+
+    if (!profiles || profiles.length === 0) {
+
+        feed.innerHTML = `
+            <div class="status empty">
+                😔 Nenašli sa žiadne profily.
+                <br><br>
+                Skús zmeniť filter.
+            </div>
+        `;
+
+        return;
+    }
+
+
+    feed.innerHTML = "";
+
+
+    profiles.forEach(profile => {
+
+        const post =
+            document.createElement("div");
+
+        post.className = "post";
+
+
+        let avatarHtml = "😊";
+
+        let imageHtml = "😊";
+
+
+        if (profile.profile_image) {
+
+            avatarHtml = `
+                <img
+                    src="${escapeHtml(profile.profile_image)}"
+                    alt="Profilová fotka"
+                >
+            `;
+
+
+            imageHtml = `
+                <img
+                    src="${escapeHtml(profile.profile_image)}"
+                    alt="Profilová fotka"
+                >
+            `;
+
+        }
+
+
+        const instagram =
+            profile.instagram
+                ? `
+                    <a
+                        class="instagram"
+                        href="https://www.instagram.com/${encodeURIComponent(
+                            profile.instagram.replace("@", "")
+                        )}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        📷 ${escapeHtml(profile.instagram)}
+                    </a>
+                `
+                : "";
+
+
+        post.innerHTML = `
+
+            <div class="post-header">
+
+                <div class="avatar">
+                    ${avatarHtml}
+                </div>
+
+
+                <div class="user-info">
+
+                    <div class="username">
+                        ${escapeHtml(profile.username)}
+                    </div>
+
+
+                    <div class="class-name">
+                        ${escapeHtml(profile.class_name)}
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="post-image">
+
+                ${imageHtml}
+
+            </div>
+
+
+            <div class="post-content">
+
+
+                <div class="post-actions">
+
+                    <button
+                        type="button"
+                        title="Páči sa mi"
+                    >
+                        ♡
+                    </button>
+
+
+                    <button
+                        type="button"
+                        title="Chat"
+                    >
+                        💬
+                    </button>
+
+                </div>
+
+
+                <div class="post-text">
+
+                    ${
+                        escapeHtml(
+                            profile.bio ||
+                            "Tento používateľ zatiaľ nemá vyplnené bio."
+                        )
+                    }
+
+                </div>
+
+
+                <div class="interests">
+
+                    ${createInterests(profile.interests)}
+
+                </div>
+
+
+                ${instagram}
+
+            </div>
+
+        `;
+
+
+        feed.appendChild(post);
+
+    });
+
+}
+
+
+/* =================================
+   NAČÍTANIE PROFILOV
+================================= */
+
+async function loadProfiles() {
+
+    feed.innerHTML = `
+        <div class="status loading">
+            ⏳ Načítavam profily...
+        </div>
+    `;
+
+
+    const className =
+        classFilter.value;
+
+
+    const interests =
+        interestFilter.value.trim();
+
+
+    const params =
+        new URLSearchParams();
+
+
+    if (className) {
+
+        params.set(
+            "class",
+            className
+        );
+
+    }
+
+
+    if (interests) {
+
+        params.set(
+            "interests",
+            interests
+        );
+
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/profiles?" +
+                params.toString()
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            feed.innerHTML = `
+                <div class="status error">
+                    ❌ ${
+                        escapeHtml(
+                            data.error ||
+                            "Profily sa nepodarilo načítať."
+                        )
+                    }
+                </div>
+            `;
+
+            return;
+        }
+
+
+        renderProfiles(
+            data.profiles
+        );
+
+
+    } catch (error) {
+
+        console.error(error);
+
+
+        feed.innerHTML = `
+            <div class="status error">
+                ❌ Nepodarilo sa spojiť so serverom.
+            </div>
+        `;
+
+    }
+
+}
+
+
+/* =================================
+   FILTROVANIE
+================================= */
+
+filterButton.addEventListener(
+    "click",
+    function() {
+
+        loadProfiles();
+
+    }
+);
+
+
+/* =================================
+   ZRUŠENIE FILTRA
+================================= */
+
+resetButton.addEventListener(
+    "click",
+    function() {
+
+        classFilter.value = "";
+
+        interestFilter.value = "";
+
+        loadProfiles();
+
+    }
+);
+
+
+/* =================================
+   ENTER V POLI ZÁUJMU
+================================= */
+
+interestFilter.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (event.key === "Enter") {
+
+            event.preventDefault();
+
+            loadProfiles();
+
+        }
+
+    }
+);
+
+
+/* =================================
+   SPUSTENIE
+================================= */
+
+loadProfiles();
+
+</script>
+
 
 </body>
 </html>
