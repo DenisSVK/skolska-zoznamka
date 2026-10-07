@@ -88,6 +88,17 @@
             cursor: pointer;
         }
 
+        button:hover {
+            opacity: 0.9;
+        }
+
+        .message {
+            margin-top: 15px;
+            text-align: center;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
         .register {
             text-align: center;
             margin-top: 22px;
@@ -130,7 +141,7 @@
             Prihlás sa a pokračuj v objavovaní ľudí z tvojej školy.
         </p>
 
-        <form>
+        <form id="loginForm">
 
             <label for="firstName">
                 Meno
@@ -174,6 +185,8 @@
 
         </form>
 
+        <div id="message" class="message"></div>
+
         <div class="register">
             Ešte nemáš účet?
             <a href="register.html">
@@ -190,6 +203,56 @@
     </div>
 
 </div>
+
+<script>
+document.getElementById("loginForm").addEventListener("submit", async function(event) {
+
+    event.preventDefault();
+
+    const firstName = document.getElementById("firstName").value.trim();
+    const lastName = document.getElementById("lastName").value.trim();
+    const password = document.getElementById("password").value;
+
+    const message = document.getElementById("message");
+
+    message.textContent = "";
+
+    try {
+
+        const response = await fetch("/api/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                firstName: firstName,
+                lastName: lastName,
+                password: password
+            })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            message.textContent = data.error || "Prihlásenie sa nepodarilo.";
+            return;
+        }
+
+        message.textContent = "Prihlásenie úspešné! 💗";
+
+        setTimeout(function() {
+            window.location.href = "profile.html";
+        }, 800);
+
+    } catch (error) {
+
+        message.textContent =
+            "Nastala chyba pri komunikácii so serverom.";
+
+    }
+
+});
+</script>
 
 </body>
 </html>
