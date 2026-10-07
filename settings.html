@@ -7,6 +7,7 @@
     <title>Nastavenia 💗</title>
 
     <style>
+
         * {
             box-sizing: border-box;
         }
@@ -41,6 +42,10 @@
             font-weight: bold;
         }
 
+        nav a:hover {
+            color: #e75480;
+        }
+
         .container {
             max-width: 600px;
             margin: 40px auto;
@@ -57,10 +62,11 @@
         h1 {
             color: #e75480;
             margin-top: 0;
+            margin-bottom: 25px;
         }
 
         .setting {
-            padding: 18px 0;
+            padding: 20px 0;
             border-bottom: 1px solid #eee;
         }
 
@@ -69,13 +75,14 @@
         }
 
         .setting h3 {
-            margin: 0 0 6px;
+            margin: 0 0 7px;
         }
 
         .setting p {
             margin: 0;
             color: #777;
             font-size: 14px;
+            line-height: 1.5;
         }
 
         .danger {
@@ -93,15 +100,18 @@
             font-size: 16px;
             font-weight: bold;
             cursor: pointer;
+            transition: 0.2s;
         }
 
         button:hover {
             background: #d94370;
+            transform: translateY(-1px);
         }
 
         .logout {
             background: #f3f3f3;
             color: #555;
+            margin-top: 25px;
         }
 
         .logout:hover {
@@ -111,7 +121,7 @@
         .privacy-options {
             display: none;
             margin-top: 15px;
-            padding: 15px;
+            padding: 16px;
             background: #fff5f8;
             border-radius: 15px;
         }
@@ -122,6 +132,7 @@
             gap: 10px;
             margin-bottom: 14px;
             font-size: 14px;
+            cursor: pointer;
         }
 
         .privacy-option:last-of-type {
@@ -132,6 +143,7 @@
             width: 18px;
             height: 18px;
             cursor: pointer;
+            accent-color: #e75480;
         }
 
         .success-message {
@@ -140,10 +152,28 @@
             margin-top: 12px !important;
         }
 
+        .info-message {
+            margin-top: 15px !important;
+            padding: 12px;
+            background: #fff5f8;
+            border-radius: 12px;
+            color: #777 !important;
+        }
+
+        .danger-button {
+            background: #d93662;
+        }
+
+        .danger-button:hover {
+            background: #c52d56;
+        }
+
         @media (max-width: 600px) {
 
             nav {
                 padding: 15px;
+                flex-direction: column;
+                gap: 12px;
             }
 
             nav a {
@@ -163,11 +193,15 @@
             .logo {
                 font-size: 18px;
             }
+
         }
+
     </style>
+
 </head>
 
 <body>
+
 
 <nav>
 
@@ -176,9 +210,19 @@
     </div>
 
     <div>
-        <a href="discover.html">Objavovať</a>
-        <a href="matches.html">Matchy</a>
-        <a href="profile.html">Profil</a>
+
+        <a href="discover.html">
+            Objavovať
+        </a>
+
+        <a href="matches.html">
+            Matchy
+        </a>
+
+        <a href="profile.html">
+            Profil
+        </a>
+
     </div>
 
 </nav>
@@ -188,16 +232,20 @@
 
     <div class="card">
 
-        <h1>⚙️ Nastavenia</h1>
+        <h1>
+            ⚙️ Nastavenia
+        </h1>
 
 
-        <!-- =========================
+        <!-- ==================================
              SÚKROMIE
-        ========================== -->
+        =================================== -->
 
         <div class="setting">
 
-            <h3>🔒 Súkromie</h3>
+            <h3>
+                🔒 Súkromie
+            </h3>
 
             <p>
                 Nastavenia viditeľnosti tvojho profilu.
@@ -264,54 +312,191 @@
         </div>
 
 
-        <!-- =========================
+        <!-- ==================================
              UPOZORNENIA
-        ========================== -->
+        =================================== -->
 
         <div class="setting">
 
-            <h3>🔔 Upozornenia</h3>
+            <h3>
+                🔔 Upozornenia
+            </h3>
 
             <p>
                 Správy a upozornenia na nové matchy.
             </p>
 
+            <button
+                type="button"
+                onclick="toggleNotifications()"
+            >
+                Nastaviť upozornenia
+            </button>
+
+
+            <div
+                id="notificationOptions"
+                class="privacy-options"
+            >
+
+                <label class="privacy-option">
+
+                    <input
+                        type="checkbox"
+                        id="messageNotifications"
+                        checked
+                    >
+
+                    <span>
+                        Upozornenia na nové správy
+                    </span>
+
+                </label>
+
+
+                <label class="privacy-option">
+
+                    <input
+                        type="checkbox"
+                        id="matchNotifications"
+                        checked
+                    >
+
+                    <span>
+                        Upozornenia na nové matchy
+                    </span>
+
+                </label>
+
+
+                <button
+                    type="button"
+                    onclick="saveNotifications()"
+                >
+                    Uložiť nastavenia
+                </button>
+
+
+                <p
+                    id="notificationMessage"
+                    class="success-message"
+                ></p>
+
+            </div>
+
         </div>
 
 
-        <!-- =========================
-             BLOKOVANÍ
-        ========================== -->
+        <!-- ==================================
+             BLOKOVANÍ POUŽÍVATELIA
+        =================================== -->
 
         <div class="setting">
 
-            <h3>🚫 Blokovaní používatelia</h3>
+            <h3>
+                🚫 Blokovaní používatelia
+            </h3>
 
             <p>
                 Správa používateľov, ktorých si zablokoval/a.
             </p>
 
+            <button
+                type="button"
+                onclick="showBlockedUsers()"
+            >
+                Zobraziť blokovaných
+            </button>
+
+
+            <div
+                id="blockedUsers"
+                class="privacy-options"
+            >
+
+                <p>
+                    Zatiaľ nemáš žiadnych blokovaných používateľov.
+                </p>
+
+            </div>
+
         </div>
 
 
-        <!-- =========================
-             NAHLÁSENIE
-        ========================== -->
+        <!-- ==================================
+             NAHLÁSENIE PROBLÉMU
+        =================================== -->
 
         <div class="setting">
 
-            <h3>⚠️ Nahlásenie problému</h3>
+            <h3>
+                ⚠️ Nahlásenie problému
+            </h3>
 
             <p>
                 Ak máš problém s používateľom alebo obsahom.
             </p>
 
+            <button
+                type="button"
+                onclick="showReportForm()"
+            >
+                Nahlásiť problém
+            </button>
+
+
+            <div
+                id="reportForm"
+                class="privacy-options"
+            >
+
+                <label
+                    style="
+                        display:block;
+                        font-size:14px;
+                        margin-bottom:8px;
+                    "
+                >
+                    Popíš problém:
+                </label>
+
+
+                <textarea
+                    id="reportText"
+                    placeholder="Napíš, čo sa stalo..."
+                    style="
+                        width:100%;
+                        min-height:110px;
+                        padding:12px;
+                        border:1px solid #ddd;
+                        border-radius:12px;
+                        resize:vertical;
+                        font-family:Arial,sans-serif;
+                    "
+                ></textarea>
+
+
+                <button
+                    type="button"
+                    onclick="sendReport()"
+                >
+                    Odoslať hlásenie
+                </button>
+
+
+                <p
+                    id="reportMessage"
+                    class="success-message"
+                ></p>
+
+            </div>
+
         </div>
 
 
-        <!-- =========================
+        <!-- ==================================
              ÚČET
-        ========================== -->
+        =================================== -->
 
         <div class="setting">
 
@@ -323,12 +508,20 @@
                 Možnosť odstrániť svoj účet.
             </p>
 
+            <button
+                type="button"
+                class="danger-button"
+                onclick="deleteAccount()"
+            >
+                Odstrániť účet
+            </button>
+
         </div>
 
 
-        <!-- =========================
+        <!-- ==================================
              ODHLÁSENIE
-        ========================== -->
+        =================================== -->
 
         <button
             class="logout"
@@ -345,17 +538,21 @@
 
 <script>
 
-/* =========================
+
+/* ==================================
    SÚKROMIE
-========================= */
+================================== */
 
 function togglePrivacy() {
 
     const options =
         document.getElementById("privacyOptions");
 
-    if (options.style.display === "none" ||
-        options.style.display === "") {
+
+    if (
+        options.style.display === "none" ||
+        options.style.display === ""
+    ) {
 
         options.style.display = "block";
 
@@ -368,10 +565,6 @@ function togglePrivacy() {
 }
 
 
-/* =========================
-   NAČÍTANIE SÚKROMIA
-========================= */
-
 function loadPrivacy() {
 
     const profileVisible =
@@ -383,7 +576,9 @@ function loadPrivacy() {
 
     if (profileVisible !== null) {
 
-        document.getElementById("profileVisible").checked =
+        document.getElementById(
+            "profileVisible"
+        ).checked =
             profileVisible === "true";
 
     }
@@ -391,7 +586,9 @@ function loadPrivacy() {
 
     if (instagramVisible !== null) {
 
-        document.getElementById("instagramVisible").checked =
+        document.getElementById(
+            "instagramVisible"
+        ).checked =
             instagramVisible === "true";
 
     }
@@ -399,17 +596,18 @@ function loadPrivacy() {
 }
 
 
-/* =========================
-   ULOŽENIE SÚKROMIA
-========================= */
-
 function savePrivacy() {
 
     const profileVisible =
-        document.getElementById("profileVisible").checked;
+        document.getElementById(
+            "profileVisible"
+        ).checked;
+
 
     const instagramVisible =
-        document.getElementById("instagramVisible").checked;
+        document.getElementById(
+            "instagramVisible"
+        ).checked;
 
 
     localStorage.setItem(
@@ -425,7 +623,9 @@ function savePrivacy() {
 
 
     const message =
-        document.getElementById("privacyMessage");
+        document.getElementById(
+            "privacyMessage"
+        );
 
 
     message.textContent =
@@ -441,9 +641,239 @@ function savePrivacy() {
 }
 
 
-/* =========================
+/* ==================================
+   UPOZORNENIA
+================================== */
+
+function toggleNotifications() {
+
+    const options =
+        document.getElementById(
+            "notificationOptions"
+        );
+
+
+    if (
+        options.style.display === "none" ||
+        options.style.display === ""
+    ) {
+
+        options.style.display = "block";
+
+    } else {
+
+        options.style.display = "none";
+
+    }
+
+}
+
+
+function loadNotifications() {
+
+    const messages =
+        localStorage.getItem(
+            "messageNotifications"
+        );
+
+
+    const matches =
+        localStorage.getItem(
+            "matchNotifications"
+        );
+
+
+    if (messages !== null) {
+
+        document.getElementById(
+            "messageNotifications"
+        ).checked =
+            messages === "true";
+
+    }
+
+
+    if (matches !== null) {
+
+        document.getElementById(
+            "matchNotifications"
+        ).checked =
+            matches === "true";
+
+    }
+
+}
+
+
+function saveNotifications() {
+
+    const messages =
+        document.getElementById(
+            "messageNotifications"
+        ).checked;
+
+
+    const matches =
+        document.getElementById(
+            "matchNotifications"
+        ).checked;
+
+
+    localStorage.setItem(
+        "messageNotifications",
+        messages
+    );
+
+
+    localStorage.setItem(
+        "matchNotifications",
+        matches
+    );
+
+
+    const message =
+        document.getElementById(
+            "notificationMessage"
+        );
+
+
+    message.textContent =
+        "Nastavenia upozornení boli uložené ✓";
+
+
+    setTimeout(function() {
+
+        message.textContent = "";
+
+    }, 3000);
+
+}
+
+
+/* ==================================
+   BLOKOVANÍ
+================================== */
+
+function showBlockedUsers() {
+
+    const box =
+        document.getElementById(
+            "blockedUsers"
+        );
+
+
+    if (box.style.display === "block") {
+
+        box.style.display = "none";
+
+        return;
+
+    }
+
+
+    box.style.display = "block";
+
+}
+
+
+/* ==================================
+   NAHLÁSENIE
+================================== */
+
+function showReportForm() {
+
+    const form =
+        document.getElementById(
+            "reportForm"
+        );
+
+
+    if (
+        form.style.display === "none" ||
+        form.style.display === ""
+    ) {
+
+        form.style.display = "block";
+
+    } else {
+
+        form.style.display = "none";
+
+    }
+
+}
+
+
+function sendReport() {
+
+    const text =
+        document.getElementById(
+            "reportText"
+        ).value.trim();
+
+
+    if (!text) {
+
+        alert(
+            "Najprv napíš, čo chceš nahlásiť."
+        );
+
+        return;
+
+    }
+
+
+    const message =
+        document.getElementById(
+            "reportMessage"
+        );
+
+
+    message.textContent =
+        "Ďakujeme za nahlásenie ✓";
+
+
+    document.getElementById(
+        "reportText"
+    ).value = "";
+
+
+    setTimeout(function() {
+
+        message.textContent = "";
+
+    }, 3000);
+
+}
+
+
+/* ==================================
+   ODSTRÁNENIE ÚČTU
+================================== */
+
+function deleteAccount() {
+
+    const confirmed =
+        confirm(
+            "Naozaj chceš odstrániť svoj účet? Táto akcia sa nedá jednoducho vrátiť späť."
+        );
+
+
+    if (!confirmed) {
+        return;
+    }
+
+
+    alert(
+        "Odstránenie účtu ešte nie je pripojené k databáze."
+    );
+
+}
+
+
+/* ==================================
    ODHLÁSENIE
-========================= */
+================================== */
 
 function logout() {
 
@@ -468,11 +898,14 @@ function logout() {
 }
 
 
-/* =========================
+/* ==================================
    PRI NAČÍTANÍ STRÁNKY
-========================= */
+================================== */
 
 loadPrivacy();
+
+loadNotifications();
+
 
 </script>
 
