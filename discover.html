@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="sk">
 <head>
@@ -241,6 +242,11 @@
 
         .post-actions button:hover {
             transform: scale(1.05);
+        }
+
+        .post-actions button:disabled {
+            opacity: 0.6;
+            cursor: wait;
         }
 
         .like-button.liked {
@@ -636,7 +642,7 @@ async function checkLike(userId) {
 
 
 /* =========================
-   LIKE
+   LIKE + MATCH + CHAT
 ========================= */
 
 async function likeUser(userId, button) {
@@ -689,6 +695,54 @@ async function likeUser(userId, button) {
                 "Máte nový match! 💗"
             );
 
+
+            /*
+             * Vytvorenie alebo nájdenie
+             * existujúceho chatu.
+             */
+
+            const chatResponse =
+                await fetch(
+                    "/api/conversation",
+                    {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            otherUserId: userId
+                        })
+                    }
+                );
+
+
+            const chatData =
+                await chatResponse.json();
+
+
+            if (!chatResponse.ok) {
+
+                alert(
+                    chatData.error ||
+                    "Chat sa nepodarilo vytvoriť."
+                );
+
+                return;
+            }
+
+
+            /*
+             * Automatické otvorenie
+             * konkrétneho chatu.
+             */
+
+            window.location.href =
+                "conversation.html?id=" +
+                encodeURIComponent(
+                    chatData.conversationId
+                );
+
+
         } else {
 
             button.innerHTML = "♥";
@@ -706,9 +760,68 @@ async function likeUser(userId, button) {
             "Nepodarilo sa spojiť so serverom."
         );
 
+
     } finally {
 
         button.disabled = false;
+
+    }
+}
+
+
+/* =========================
+   OTVORENIE CHATU
+========================= */
+
+async function openChat(userId) {
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/conversation",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        otherUserId: userId
+                    })
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            alert(
+                data.error ||
+                "Chat je dostupný až po vzájomnom matchi. 💗"
+            );
+
+            return;
+        }
+
+
+        window.location.href =
+            "conversation.html?id=" +
+            encodeURIComponent(
+                data.conversationId
+            );
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert(
+            "Nepodarilo sa otvoriť chat."
+        );
+
     }
 }
 
@@ -863,6 +976,11 @@ async function renderProfiles(profiles) {
             post.querySelector(".chat-button");
 
 
+        /*
+         * Zistíme, či už používateľ
+         * dal tomuto profilu like.
+         */
+
         const alreadyLiked =
             await checkLike(profile.id);
 
@@ -875,6 +993,10 @@ async function renderProfiles(profiles) {
 
         }
 
+
+        /*
+         * Like tlačidlo
+         */
 
         likeButton.addEventListener(
             "click",
@@ -889,12 +1011,16 @@ async function renderProfiles(profiles) {
         );
 
 
+        /*
+         * Chat tlačidlo
+         */
+
         chatButton.addEventListener(
             "click",
             function() {
 
-                alert(
-                    "Chat bude dostupný po vzájomnom matchi. 💗"
+                openChat(
+                    profile.id
                 );
 
             }
@@ -1010,7 +1136,9 @@ async function loadProfiles() {
 filterButton.addEventListener(
     "click",
     function() {
+
         loadProfiles();
+
     }
 );
 
@@ -1051,3 +1179,4 @@ loadProfiles();
 
 </body>
 </html>
+```
