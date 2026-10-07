@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat 💗</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #fff0f6, #ffd6e7);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        nav {
+            background: white;
+            padding: 18px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: bold;
+            color: #e75480;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #555;
+            margin-left: 18px;
+            font-weight: bold;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        .chat {
+            background: white;
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .chat-header {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .avatar {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            background: #ffd6e7;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+        }
+
+        .chat-header h2 {
+            margin: 0;
+            color: #e75480;
+        }
+
+        .chat-header p {
+            margin: 5px 0 0;
+            color: #888;
+        }
+
+        .messages {
+            padding: 25px;
+            min-height: 400px;
+            background: #fff9fb;
+        }
+
+        .message {
+            max-width: 70%;
+            padding: 12px 16px;
+            margin-bottom: 15px;
+            border-radius: 18px;
+            line-height: 1.4;
+        }
+
+        .received {
+            background: #f0f0f0;
+            margin-right: auto;
+        }
+
+        .sent {
+            background: #e75480;
+            color: white;
+            margin-left: auto;
+        }
+
+        .time {
+            font-size: 11px;
+            opacity: 0.6;
+            margin-top: 5px;
+        }
+
+        .input-area {
+            padding: 15px;
+            display: flex;
+            gap: 10px;
+            border-top: 1px solid #eee;
+        }
+
+        .input-area input {
+            flex: 1;
+            padding: 14px;
+            border: 1px solid #ddd;
+            border-radius: 15px;
+            font-size: 15px;
+            outline: none;
+        }
+
+        .input-area button {
+            background: #e75480;
+            color: white;
+            border: none;
+            border-radius: 15px;
+            padding: 0 20px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .back {
+            display: inline-block;
+            margin-bottom: 15px;
+            color: #e75480;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        @media (max-width: 600px) {
+            nav {
+                padding: 15px;
+            }
+
+            nav a {
+                margin-left: 8px;
+                font-size: 13px;
+            }
+
+            .container {
+                margin: 20px auto;
+                padding: 10px;
+            }
+
+            .message {
+                max-width: 85%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<nav>
+    <div class="logo">💗 Školská Zoznamka</div>
+
+    <div>
+        <a href="discover.html">Objavovať</a>
+        <a href="matches.html">Matchy</a>
+        <a href="profile.html">Profil</a>
+    </div>
+</nav>
+
+<div class="container">
+
+    <a href="matches.html" class="back">← Späť na matchy</a>
+
+    <div class="chat">
+
+        <div class="chat-header">
+            <div class="avatar">😊</div>
+
+            <div>
+                <h2>Sofia</h2>
+                <p>2.B • online</p>
+            </div>
+        </div>
+
+        <div class="messages">
+
+            <div class="message received">
+                Ahoj! 😊
+                <div class="time">18:32</div>
+            </div>
+
+            <div class="message sent">
+                Ahoj! Ako sa máš? 💗
+                <div class="time">18:33</div>
+            </div>
+
+            <div class="message received">
+                Dobre, ďakujem! Čo ty?
+                <div class="time">18:34</div>
+            </div>
+
+            <div class="message sent">
+                Tiež dobre 😄
+                <div class="time">18:35</div>
+            </div>
+
+        </div>
+
+        <div class="input-area">
+            <input type="text" placeholder="Napíš správu...">
+            <button>Odoslať</button>
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>
