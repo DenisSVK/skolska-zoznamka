@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Školská Zoznamka 💗</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #fff0f6, #ffd6e7);
+            color: #3d2630;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 7%;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #e75480;
+        }
+
+        .nav-button {
+            text-decoration: none;
+            color: white;
+            background: #e75480;
+            padding: 11px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+        }
+
+        .hero {
+            min-height: 75vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .hero-content {
+            max-width: 700px;
+        }
+
+        .heart {
+            font-size: 70px;
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            font-size: 52px;
+            margin-bottom: 20px;
+        }
+
+        h1 span {
+            color: #e75480;
+        }
+
+        .subtitle {
+            font-size: 20px;
+            line-height: 1.6;
+            color: #694653;
+            margin-bottom: 35px;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .primary {
+            background: #e75480;
+            color: white;
+            text-decoration: none;
+            padding: 15px 28px;
+            border-radius: 30px;
+            font-weight: bold;
+            box-shadow: 0 8px 20px rgba(231, 84, 128, 0.25);
+        }
+
+        .secondary {
+            background: white;
+            color: #e75480;
+            text-decoration: none;
+            padding: 15px 28px;
+            border-radius: 30px;
+            font-weight: bold;
+        }
+
+        .note {
+            margin-top: 30px;
+            font-size: 14px;
+            color: #8b6875;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 38px;
+            }
+
+            .subtitle {
+                font-size: 17px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <div class="logo">💗 Školská Zoznamka</div>
+        <a href="#" class="nav-button">Prihlásiť sa</a>
+    </nav>
+
+    <main class="hero">
+        <div class="hero-content">
+
+            <div class="heart">💗</div>
+
+            <h1>
+                Spoznaj niekoho<br>
+                <span>výnimočného.</span>
+            </h1>
+
+            <p class="subtitle">
+                Miesto, kde môžeš spoznať ľudí z tvojej školy,
+                nájsť spoločné záujmy a možno aj svoju novú známosť.
+            </p>
+
+            <div class="buttons">
+                <a href="#" class="primary">Vytvoriť profil 💕</a>
+                <a href="#" class="secondary">Objavovať profily</a>
+            </div>
+
+            <p class="note">
+                💕 Zoznamka vytvorená pre študentov tvojej školy
+            </p>
+
+        </div>
+    </main>
+
+</body>
+</html>
