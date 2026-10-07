@@ -28,6 +28,9 @@
             align-items: center;
             justify-content: space-between;
             padding: 0 7%;
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
         .logo {
@@ -39,12 +42,28 @@
         .nav-links {
             display: flex;
             gap: 20px;
+            align-items: center;
         }
 
         .nav-links a {
             text-decoration: none;
             color: #694653;
             font-size: 14px;
+        }
+
+        .nav-links a:hover {
+            color: #e75480;
+        }
+
+        .menu-button {
+            display: none;
+            border: none;
+            background: #fff0f6;
+            color: #e75480;
+            font-size: 24px;
+            padding: 8px 12px;
+            border-radius: 12px;
+            cursor: pointer;
         }
 
         .page {
@@ -91,6 +110,13 @@
             justify-content: center;
             font-size: 45px;
             margin: 0 auto 15px;
+            overflow: hidden;
+        }
+
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         .name {
@@ -115,6 +141,10 @@
             font-weight: bold;
         }
 
+        .chat:hover {
+            background: #d94370;
+        }
+
         .empty {
             text-align: center;
             background: white;
@@ -137,17 +167,64 @@
             line-height: 1.5;
         }
 
+        .status {
+            text-align: center;
+            background: white;
+            padding: 35px 25px;
+            border-radius: 22px;
+            box-shadow: 0 10px 30px rgba(80, 30, 50, 0.08);
+            color: #80616d;
+        }
+
+        .error {
+            color: #c43e68;
+        }
+
         @media (max-width: 600px) {
+
             nav {
                 padding: 0 20px;
             }
 
+            .menu-button {
+                display: block;
+            }
+
             .nav-links {
                 display: none;
+                position: absolute;
+                top: 70px;
+                right: 15px;
+                left: 15px;
+                background: white;
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0;
+                padding: 10px;
+                border-radius: 16px;
+                box-shadow: 0 10px 30px rgba(80, 30, 50, 0.15);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links a {
+                padding: 15px;
+                border-radius: 10px;
+                font-size: 15px;
+            }
+
+            .nav-links a:hover {
+                background: #fff0f6;
             }
 
             .page {
                 margin-top: 25px;
+            }
+
+            .heading h1 {
+                font-size: 28px;
             }
         }
     </style>
@@ -161,10 +238,37 @@
         💗 Školská Zoznamka
     </div>
 
-    <div class="nav-links">
-        <a href="discover.html">Objavovať</a>
-        <a href="profile.html">Môj profil</a>
-        <a href="chat.html">Chat</a>
+    <button
+        class="menu-button"
+        id="menuButton"
+        type="button"
+        aria-label="Otvoriť menu"
+    >
+        ☰
+    </button>
+
+    <div class="nav-links" id="navLinks">
+
+        <a href="discover.html">
+            🔎 Objavovať
+        </a>
+
+        <a href="matches.html">
+            💗 Matchy
+        </a>
+
+        <a href="chat.html">
+            💬 Chat
+        </a>
+
+        <a href="profile.html">
+            👤 Profil
+        </a>
+
+        <a href="settings.html">
+            ⚙️ Nastavenia
+        </a>
+
     </div>
 
 </nav>
@@ -172,55 +276,221 @@
 <div class="page">
 
     <div class="heading">
-        <h1>Vaše matchy 💕</h1>
-        <p>Ľudia, s ktorými máte vzájomný záujem.</p>
+
+        <h1>
+            Tvoje matchy 💕
+        </h1>
+
+        <p>
+            Ľudia, s ktorými máte vzájomný záujem.
+        </p>
+
     </div>
 
-    <div class="matches">
+    <div
+        class="matches"
+        id="matches"
+    >
 
-        <div class="match">
-
-            <div class="avatar">
-                😊
-            </div>
-
-            <div class="name">
-                Sofia
-            </div>
-
-            <div class="class">
-                2.B
-            </div>
-
-            <a href="chat.html" class="chat">
-                💬 Napísať
-            </a>
-
-        </div>
-
-        <div class="match">
-
-            <div class="avatar">
-                😎
-            </div>
-
-            <div class="name">
-                Alex
-            </div>
-
-            <div class="class">
-                3.A
-            </div>
-
-            <a href="chat.html" class="chat">
-                💬 Napísať
-            </a>
-
+        <div class="status">
+            ⏳ Načítavam matchy...
         </div>
 
     </div>
 
 </div>
+
+<script>
+
+const menuButton =
+    document.getElementById("menuButton");
+
+const navLinks =
+    document.getElementById("navLinks");
+
+const matchesContainer =
+    document.getElementById("matches");
+
+
+menuButton.addEventListener("click", function() {
+
+    navLinks.classList.toggle("active");
+
+});
+
+
+function escapeHtml(value) {
+
+    if (!value) {
+        return "";
+    }
+
+    return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+
+}
+
+
+function renderMatches(matches) {
+
+    if (!matches || matches.length === 0) {
+
+        matchesContainer.innerHTML = `
+
+            <div class="empty">
+
+                <div class="empty-icon">
+                    💗
+                </div>
+
+                <h2>
+                    Zatiaľ nemáš žiadne matchy
+                </h2>
+
+                <p>
+                    Keď si s niekým navzájom dáte páči sa mi,
+                    zobrazí sa tu váš match.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+    }
+
+
+    matchesContainer.innerHTML = "";
+
+
+    matches.forEach(profile => {
+
+        const card =
+            document.createElement("div");
+
+        card.className = "match";
+
+
+        let avatar = "😊";
+
+
+        if (profile.profile_image) {
+
+            avatar = `
+
+                <img
+                    src="${escapeHtml(profile.profile_image)}"
+                    alt="Profilová fotka"
+                >
+
+            `;
+
+        }
+
+
+        card.innerHTML = `
+
+            <div class="avatar">
+                ${avatar}
+            </div>
+
+            <div class="name">
+                ${escapeHtml(profile.username)}
+            </div>
+
+            <div class="class">
+                ${escapeHtml(profile.class_name || "")}
+            </div>
+
+            <a
+                href="chat.html"
+                class="chat"
+            >
+                💬 Napísať
+            </a>
+
+        `;
+
+
+        matchesContainer.appendChild(card);
+
+    });
+
+}
+
+
+async function loadMatches() {
+
+    matchesContainer.innerHTML = `
+
+        <div class="status">
+            ⏳ Načítavam matchy...
+        </div>
+
+    `;
+
+
+    try {
+
+        const response =
+            await fetch("/api/matches");
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            matchesContainer.innerHTML = `
+
+                <div class="status error">
+
+                    ❌
+
+                    ${escapeHtml(
+                        data.error ||
+                        "Matchy sa nepodarilo načítať."
+                    )}
+
+                </div>
+
+            `;
+
+            return;
+        }
+
+
+        renderMatches(data.matches);
+
+
+    } catch (error) {
+
+        console.error(error);
+
+
+        matchesContainer.innerHTML = `
+
+            <div class="status error">
+
+                ❌ Nepodarilo sa spojiť so serverom.
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+loadMatches();
+
+</script>
 
 </body>
 </html>
