@@ -1,137 +1,146 @@
 <!DOCTYPE html>
+
 <html lang="sk">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Chat</title>
+```
+<title>Chat</title>
 
-    <style>
-        * {
-            box-sizing: border-box;
-        }
+<style>
+    * {
+        box-sizing: border-box;
+    }
 
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #fff5f8;
-            color: #333;
-        }
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #fff5f8;
+        color: #333;
+    }
 
-        header {
-            background: #ff8fb1;
-            padding: 18px 25px;
-            color: white;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+    header {
+        background: #ff8fb1;
+        padding: 18px 25px;
+        color: white;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
 
-        header h1 {
-            margin: 0;
-            font-size: 22px;
-        }
+    header h1 {
+        margin: 0;
+        font-size: 22px;
+    }
 
-        .back {
-            color: white;
-            text-decoration: none;
-            font-size: 15px;
-        }
+    .back {
+        color: white;
+        text-decoration: none;
+        font-size: 15px;
+    }
 
+    .chat-container {
+        max-width: 800px;
+        margin: 30px auto;
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        overflow: hidden;
+    }
+
+    .messages {
+        min-height: 450px;
+        max-height: 550px;
+        overflow-y: auto;
+        padding: 25px;
+    }
+
+    .empty {
+        text-align: center;
+        color: #999;
+        padding: 100px 20px;
+    }
+
+    .message {
+        margin-bottom: 14px;
+        display: flex;
+    }
+
+    .message.mine {
+        justify-content: flex-end;
+    }
+
+    .bubble {
+        max-width: 70%;
+        padding: 11px 15px;
+        border-radius: 18px;
+        background: #f1f1f1;
+        word-wrap: break-word;
+    }
+
+    .mine .bubble {
+        background: #ff8fb1;
+        color: white;
+    }
+
+    .time {
+        font-size: 10px;
+        opacity: 0.6;
+        margin-top: 4px;
+    }
+
+    .input-area {
+        border-top: 1px solid #eee;
+        padding: 15px;
+        display: flex;
+        gap: 10px;
+    }
+
+    .input-area input {
+        flex: 1;
+        padding: 13px 16px;
+        border: 1px solid #ddd;
+        border-radius: 25px;
+        outline: none;
+        font-size: 15px;
+    }
+
+    .input-area button {
+        border: none;
+        background: #ff8fb1;
+        color: white;
+        padding: 0 22px;
+        border-radius: 25px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+    .input-area button:hover {
+        background: #ff729d;
+    }
+
+    .input-area button:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+
+    @media (max-width: 600px) {
         .chat-container {
-            max-width: 800px;
-            margin: 30px auto;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
-            overflow: hidden;
+            margin: 10px;
         }
 
         .messages {
-            min-height: 450px;
-            max-height: 550px;
-            overflow-y: auto;
-            padding: 25px;
-        }
-
-        .empty {
-            text-align: center;
-            color: #999;
-            padding: 100px 20px;
-        }
-
-        .message {
-            margin-bottom: 14px;
-            display: flex;
-        }
-
-        .message.mine {
-            justify-content: flex-end;
+            min-height: 400px;
         }
 
         .bubble {
-            max-width: 70%;
-            padding: 11px 15px;
-            border-radius: 18px;
-            background: #f1f1f1;
-            word-wrap: break-word;
+            max-width: 85%;
         }
+    }
+</style>
+```
 
-        .mine .bubble {
-            background: #ff8fb1;
-            color: white;
-        }
-
-        .time {
-            font-size: 10px;
-            opacity: 0.6;
-            margin-top: 4px;
-        }
-
-        .input-area {
-            border-top: 1px solid #eee;
-            padding: 15px;
-            display: flex;
-            gap: 10px;
-        }
-
-        .input-area input {
-            flex: 1;
-            padding: 13px 16px;
-            border: 1px solid #ddd;
-            border-radius: 25px;
-            outline: none;
-            font-size: 15px;
-        }
-
-        .input-area button {
-            border: none;
-            background: #ff8fb1;
-            color: white;
-            padding: 0 22px;
-            border-radius: 25px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        .input-area button:hover {
-            background: #ff729d;
-        }
-
-        @media (max-width: 600px) {
-            .chat-container {
-                margin: 10px;
-            }
-
-            .messages {
-                min-height: 400px;
-            }
-
-            .bubble {
-                max-width: 85%;
-            }
-        }
-    </style>
 </head>
 
 <body>
@@ -143,24 +152,26 @@
 
 <div class="chat-container">
 
-    <div class="messages" id="messages">
-        <div class="empty">
-            Načítavam chat...
-        </div>
+```
+<div class="messages" id="messages">
+    <div class="empty">
+        Načítavam chat...
     </div>
+</div>
 
-    <div class="input-area">
-        <input
-            type="text"
-            id="messageInput"
-            placeholder="Napíš správu..."
-            autocomplete="off"
-        >
+<div class="input-area">
+    <input
+        type="text"
+        id="messageInput"
+        placeholder="Napíš správu..."
+        autocomplete="off"
+    >
 
-        <button onclick="sendMessage()">
-            Odoslať
-        </button>
-    </div>
+    <button id="sendButton" onclick="sendMessage()">
+        Odoslať
+    </button>
+</div>
+```
 
 </div>
 
@@ -169,19 +180,32 @@
 const params = new URLSearchParams(window.location.search);
 const conversationId = params.get("id");
 
+let isLoadingMessages = false;
+
 if (!conversationId) {
+
     document.getElementById("messages").innerHTML =
         '<div class="empty">Chat nebol nájdený.</div>';
+
+    document.getElementById("messageInput").disabled = true;
+    document.getElementById("sendButton").disabled = true;
 }
+
+
+/* =========================
+   NAČÍTANIE SPRÁV
+========================= */
 
 async function loadMessages() {
 
-    if (!conversationId) return;
+    if (!conversationId || isLoadingMessages) return;
+
+    isLoadingMessages = true;
 
     try {
 
         const response = await fetch(
-            `/api/messages?conversation=${conversationId}`
+            `/api/messages?conversation=${encodeURIComponent(conversationId)}`
         );
 
         const data = await response.json();
@@ -191,7 +215,6 @@ async function loadMessages() {
         }
 
         const messages = data.messages || [];
-
         const container = document.getElementById("messages");
 
         if (messages.length === 0) {
@@ -229,17 +252,30 @@ async function loadMessages() {
                 Nepodarilo sa načítať správy.
             </div>
         `;
+
+    } finally {
+
+        isLoadingMessages = false;
+
     }
 }
+
+
+/* =========================
+   ODOSLANIE SPRÁVY
+========================= */
 
 async function sendMessage() {
 
     const input = document.getElementById("messageInput");
+    const button = document.getElementById("sendButton");
+
     const message = input.value.trim();
 
     if (!message || !conversationId) return;
 
     input.disabled = true;
+    button.disabled = true;
 
     try {
 
@@ -257,27 +293,78 @@ async function sendMessage() {
         const data = await response.json();
 
         if (!response.ok) {
-            alert(data.error || "Správu sa nepodarilo odoslať.");
+
+            alert(
+                data.error ||
+                "Správu sa nepodarilo odoslať."
+            );
+
             return;
         }
 
+        /*
+         * Vymažeme text z inputu
+         */
         input.value = "";
 
-        await loadMessages();
+        /*
+         * SPRÁVU ZOBRAZÍME OKAMŽITE
+         * bez načítania celej stránky
+         */
+
+        const container = document.getElementById("messages");
+
+        const empty = container.querySelector(".empty");
+
+        if (empty) {
+            empty.remove();
+        }
+
+        const newMessage = document.createElement("div");
+
+        newMessage.className = "message mine";
+
+        newMessage.innerHTML = `
+            <div class="bubble">
+                ${escapeHtml(data.message.message)}
+
+                <div class="time">
+                    ${formatTime(data.message.created_at)}
+                </div>
+            </div>
+        `;
+
+        container.appendChild(newMessage);
+
+        /*
+         * Automaticky posunieme chat
+         * na najnovšiu správu
+         */
+
+        container.scrollTop = container.scrollHeight;
 
     } catch (error) {
 
         console.error(error);
 
-        alert("Správu sa nepodarilo odoslať.");
+        alert(
+            "Správu sa nepodarilo odoslať."
+        );
 
     } finally {
 
         input.disabled = false;
+        button.disabled = false;
+
         input.focus();
 
     }
 }
+
+
+/* =========================
+   OCHRANA PRED HTML
+========================= */
 
 function escapeHtml(text) {
 
@@ -287,6 +374,11 @@ function escapeHtml(text) {
 
     return div.innerHTML;
 }
+
+
+/* =========================
+   ČAS SPRÁVY
+========================= */
 
 function formatTime(date) {
 
@@ -298,19 +390,43 @@ function formatTime(date) {
     });
 }
 
+
+/* =========================
+   ENTER = ODOSLAŤ
+========================= */
+
 document
     .getElementById("messageInput")
     .addEventListener("keydown", function(event) {
 
         if (event.key === "Enter") {
+
+            event.preventDefault();
+
             sendMessage();
+
         }
 
     });
 
+
+/* =========================
+   PRVÉ NAČÍTANIE
+========================= */
+
 loadMessages();
 
-setInterval(loadMessages, 5000);
+
+/* =========================
+   KONTROLA NOVÝCH SPRÁV
+   KAŽDÝCH 5 SEKÚND
+========================= */
+
+setInterval(function() {
+
+    loadMessages();
+
+}, 5000);
 
 </script>
 
