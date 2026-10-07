@@ -1,0 +1,1 @@
+# skolska-zoznamka
