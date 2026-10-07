@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Prihlásenie | Školská Zoznamka</title>
+    <title>Prihlásenie | SOŠ Handlová Zoznamka</title>
 
     <style>
         * {
@@ -100,6 +100,17 @@
             font-weight: bold;
             text-decoration: none;
         }
+
+        .back {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+        .back a {
+            color: #80616d;
+            text-decoration: none;
+        }
     </style>
 </head>
 
@@ -108,7 +119,7 @@
 <div class="container">
 
     <div class="logo">
-        💗 Školská Zoznamka
+        💗 SOŠ Handlová Zoznamka
     </div>
 
     <div class="card">
@@ -121,21 +132,39 @@
 
         <form>
 
-            <label for="email">E-mail</label>
+            <label for="firstName">
+                Meno
+            </label>
 
             <input
-                type="email"
-                id="email"
-                placeholder="tvoj@email.sk"
+                type="text"
+                id="firstName"
+                placeholder="Tvoje meno"
+                autocomplete="given-name"
                 required
             >
 
-            <label for="password">Heslo</label>
+            <label for="lastName">
+                Priezvisko
+            </label>
+
+            <input
+                type="text"
+                id="lastName"
+                placeholder="Tvoje priezvisko"
+                autocomplete="family-name"
+                required
+            >
+
+            <label for="password">
+                Heslo
+            </label>
 
             <input
                 type="password"
                 id="password"
                 placeholder="Tvoje heslo"
+                autocomplete="current-password"
                 required
             >
 
@@ -147,7 +176,15 @@
 
         <div class="register">
             Ešte nemáš účet?
-            <a href="register.html">Vytvoriť účet</a>
+            <a href="register.html">
+                Vytvoriť účet
+            </a>
+        </div>
+
+        <div class="back">
+            <a href="index.html">
+                ← Späť na úvod
+            </a>
         </div>
 
     </div>
