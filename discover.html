@@ -28,6 +28,9 @@
             align-items: center;
             justify-content: space-between;
             padding: 0 7%;
+            position: sticky;
+            top: 0;
+            z-index: 10;
         }
 
         .logo {
@@ -48,18 +51,17 @@
         }
 
         .page {
-            max-width: 850px;
-            margin: 40px auto;
+            max-width: 700px;
+            margin: 35px auto;
             padding: 0 20px;
         }
 
         .heading {
-            text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
         }
 
         .heading h1 {
-            font-size: 34px;
+            font-size: 32px;
             margin-bottom: 8px;
         }
 
@@ -67,17 +69,84 @@
             color: #80616d;
         }
 
-        .profile-card {
-            max-width: 430px;
-            margin: auto;
+        .filters {
             background: white;
-            border-radius: 25px;
-            overflow: hidden;
-            box-shadow: 0 15px 40px rgba(80, 30, 50, 0.12);
+            border-radius: 18px;
+            padding: 18px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 20px rgba(80, 30, 50, 0.06);
         }
 
-        .photo {
-            height: 300px;
+        .filters-title {
+            font-weight: bold;
+            margin-bottom: 12px;
+        }
+
+        .filter-row {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        select {
+            flex: 1;
+            min-width: 150px;
+            padding: 11px 13px;
+            border: 1px solid #ead5de;
+            border-radius: 12px;
+            background: white;
+            color: #694653;
+            font-size: 14px;
+        }
+
+        .feed {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .post {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(80, 30, 50, 0.08);
+        }
+
+        .post-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 18px;
+        }
+
+        .avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: #ffd6e7;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .user-info {
+            flex: 1;
+        }
+
+        .username {
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .class-name {
+            color: #e75480;
+            font-size: 13px;
+            margin-top: 3px;
+        }
+
+        .post-image {
+            height: 330px;
             background: linear-gradient(135deg, #ffd6e7, #ffeef5);
             display: flex;
             align-items: center;
@@ -85,26 +154,27 @@
             font-size: 100px;
         }
 
-        .info {
-            padding: 25px;
+        .post-content {
+            padding: 18px;
         }
 
-        .name {
-            font-size: 25px;
-            font-weight: bold;
-            margin-bottom: 5px;
+        .post-actions {
+            display: flex;
+            gap: 18px;
+            margin-bottom: 12px;
         }
 
-        .class {
-            color: #e75480;
-            font-size: 14px;
-            margin-bottom: 15px;
+        .post-actions button {
+            border: none;
+            background: none;
+            font-size: 24px;
+            cursor: pointer;
         }
 
-        .bio {
-            color: #694653;
+        .post-text {
             line-height: 1.5;
-            margin-bottom: 18px;
+            color: #694653;
+            margin-bottom: 14px;
         }
 
         .interests {
@@ -116,40 +186,18 @@
         .interest {
             background: #fff0f6;
             color: #c43e68;
-            padding: 8px 12px;
+            padding: 7px 11px;
             border-radius: 20px;
-            font-size: 13px;
+            font-size: 12px;
         }
 
-        .actions {
-            display: flex;
-            gap: 15px;
-            padding: 0 25px 25px;
-        }
-
-        .action {
-            flex: 1;
-            height: 55px;
-            border-radius: 30px;
-            border: none;
-            font-size: 22px;
-            cursor: pointer;
-        }
-
-        .skip {
-            background: #f5f0f2;
-        }
-
-        .like {
-            background: #e75480;
-            color: white;
-        }
-
-        .hint {
-            text-align: center;
-            color: #9a7b86;
-            font-size: 13px;
-            margin-top: 20px;
+        .profile-link {
+            display: inline-block;
+            margin-top: 15px;
+            color: #e75480;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 14px;
         }
 
         @media (max-width: 600px) {
@@ -165,8 +213,8 @@
                 margin-top: 25px;
             }
 
-            .photo {
-                height: 260px;
+            .post-image {
+                height: 270px;
             }
         }
     </style>
@@ -184,6 +232,7 @@
         <a href="profile.html">Môj profil</a>
         <a href="matches.html">Matchy</a>
         <a href="chat.html">Chat</a>
+        <a href="settings.html">Nastavenia</a>
     </div>
 
 </nav>
@@ -192,55 +241,153 @@
 
     <div class="heading">
         <h1>Objavuj 👀</h1>
-        <p>Spoznaj ľudí z tvojej školy.</p>
+        <p>Spoznaj ľudí z tvojej školy a pozri sa, čo ich baví.</p>
     </div>
 
-    <div class="profile-card">
+    <div class="filters">
 
-        <div class="photo">
-            😊
+        <div class="filters-title">
+            🔎 Filtrovať
         </div>
 
-        <div class="info">
+        <div class="filter-row">
 
-            <div class="name">
-                Sofia
-            </div>
+            <select>
+                <option>Všetky triedy</option>
+                <option>1.A</option>
+                <option>1.B</option>
+                <option>2.A</option>
+                <option>2.B</option>
+                <option>3.A</option>
+                <option>3.B</option>
+                <option>4.A</option>
+                <option>4.B</option>
+            </select>
 
-            <div class="class">
-                2.B
-            </div>
-
-            <div class="bio">
-                Milujem hudbu, filmy a trávenie času s kamarátmi.
-                Vždy som za dobrý výlet alebo koncert. 🎵
-            </div>
-
-            <div class="interests">
-                <span class="interest">🎵 Hudba</span>
-                <span class="interest">🎬 Filmy</span>
-                <span class="interest">🏐 Volejbal</span>
-                <span class="interest">✈️ Cestovanie</span>
-            </div>
-
-        </div>
-
-        <div class="actions">
-
-            <button class="action skip">
-                ✕
-            </button>
-
-            <button class="action like">
-                ❤️
-            </button>
+            <select>
+                <option>Všetky záujmy</option>
+                <option>🎵 Hudba</option>
+                <option>🎬 Filmy</option>
+                <option>🎮 Hry</option>
+                <option>🏀 Šport</option>
+                <option>✈️ Cestovanie</option>
+            </select>
 
         </div>
 
     </div>
 
-    <div class="hint">
-        ❤️ Páči sa mi &nbsp; • &nbsp; ✕ Preskočiť
+    <div class="feed">
+
+        <!-- PRÍSPEVOK 1 -->
+
+        <div class="post">
+
+            <div class="post-header">
+
+                <div class="avatar">
+                    😊
+                </div>
+
+                <div class="user-info">
+                    <div class="username">
+                        Sofia
+                    </div>
+
+                    <div class="class-name">
+                        2.B
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="post-image">
+                😊
+            </div>
+
+            <div class="post-content">
+
+                <div class="post-actions">
+                    <button>♡</button>
+                    <button>💬</button>
+                </div>
+
+                <div class="post-text">
+                    Milujem hudbu, filmy a trávenie času
+                    s kamarátmi. Vždy som za dobrý výlet
+                    alebo koncert. 🎵
+                </div>
+
+                <div class="interests">
+                    <span class="interest">🎵 Hudba</span>
+                    <span class="interest">🎬 Filmy</span>
+                    <span class="interest">🏐 Volejbal</span>
+                    <span class="interest">✈️ Cestovanie</span>
+                </div>
+
+                <a href="profile.html" class="profile-link">
+                    Zobraziť profil →
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- PRÍSPEVOK 2 -->
+
+        <div class="post">
+
+            <div class="post-header">
+
+                <div class="avatar">
+                    😎
+                </div>
+
+                <div class="user-info">
+
+                    <div class="username">
+                        Alex
+                    </div>
+
+                    <div class="class-name">
+                        3.A
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="post-image">
+                🎮
+            </div>
+
+            <div class="post-content">
+
+                <div class="post-actions">
+                    <button>♡</button>
+                    <button>💬</button>
+                </div>
+
+                <div class="post-text">
+                    Vo voľnom čase hrám hry, počúvam hudbu
+                    a rád objavujem nové miesta. 🎮
+                </div>
+
+                <div class="interests">
+                    <span class="interest">🎮 Hry</span>
+                    <span class="interest">🎵 Hudba</span>
+                    <span class="interest">🌍 Cestovanie</span>
+                </div>
+
+                <a href="profile.html" class="profile-link">
+                    Zobraziť profil →
+                </a>
+
+            </div>
+
+        </div>
+
     </div>
 
 </div>
