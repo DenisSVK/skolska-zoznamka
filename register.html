@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Registrácia | Školská Zoznamka</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #fff0f6, #ffd6e7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 25px;
+            color: #3d2630;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 480px;
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 24px;
+            font-weight: bold;
+            color: #e75480;
+        }
+
+        .card {
+            background: white;
+            border-radius: 25px;
+            padding: 35px;
+            box-shadow: 0 15px 40px rgba(80, 30, 50, 0.12);
+        }
+
+        h1 {
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+
+        .description {
+            color: #80616d;
+            line-height: 1.5;
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 7px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid #ead5de;
+            border-radius: 13px;
+            font-size: 16px;
+            margin-bottom: 18px;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #e75480;
+        }
+
+        .button {
+            width: 100%;
+            border: none;
+            background: #e75480;
+            color: white;
+            padding: 15px;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 5px;
+        }
+
+        .button:hover {
+            opacity: 0.9;
+        }
+
+        .login {
+            text-align: center;
+            margin-top: 22px;
+            font-size: 14px;
+            color: #80616d;
+        }
+
+        .login a {
+            color: #e75480;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .info {
+            background: #fff0f6;
+            padding: 13px;
+            border-radius: 12px;
+            font-size: 13px;
+            line-height: 1.5;
+            color: #694653;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="logo">
+        💗 Školská Zoznamka
+    </div>
+
+    <div class="card">
+
+        <h1>Vytvor si účet 💕</h1>
+
+        <p class="description">
+            Pridaj sa k ľuďom z tvojej školy a začni objavovať nové známosti.
+        </p>
+
+        <div class="info">
+            🔒 Tvoje heslo bude chránené a nebude verejne zobrazené.
+        </div>
+
+        <form>
+
+            <label for="email">E-mail</label>
+            <input
+                type="email"
+                id="email"
+                placeholder="tvoj@email.sk"
+                required
+            >
+
+            <label for="password">Heslo</label>
+            <input
+                type="password"
+                id="password"
+                placeholder="Minimálne 8 znakov"
+                minlength="8"
+                required
+            >
+
+            <label for="password2">Zopakuj heslo</label>
+            <input
+                type="password"
+                id="password2"
+                placeholder="Zadaj heslo ešte raz"
+                minlength="8"
+                required
+            >
+
+            <button class="button" type="submit">
+                Vytvoriť účet 💗
+            </button>
+
+        </form>
+
+        <div class="login">
+            Už máš účet?
+            <a href="login.html">Prihlásiť sa</a>
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>
