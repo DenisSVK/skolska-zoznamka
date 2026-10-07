@@ -44,9 +44,15 @@ export default async function handler(req, res) {
             });
         }
 
+        const user = result[0];
+
+        res.setHeader(
+            "Set-Cookie",
+            `user_id=${user.id}; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=604800`
+        );
+
         return res.status(200).json({
-            message: "Prihlásenie úspešné.",
-            user: result[0]
+            message: "Prihlásenie úspešné."
         });
 
     } catch (error) {
