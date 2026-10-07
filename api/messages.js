@@ -22,21 +22,18 @@ if (!userId) {
 try {
 
     /*
-     * AUTOMATICKÉ MAZANIE SPRÁV
-     *
-     * Pri každej požiadavke odstránime správy,
-     * ktoré sú staršie ako 24 hodín.
+     * Vymažeme správy staršie ako 24 hodín.
      */
 
     await sql`
         DELETE FROM messages
-        WHERE created_at < CURRENT_TIMESTAMP - INTERVAL '24 hours'
+        WHERE created_at < NOW() - INTERVAL '24 hours'
     `;
 
 
-    /* =========================
-       NAČÍTANIE SPRÁV
-    ========================= */
+    /*
+     * NAČÍTANIE SPRÁV
+     */
 
     if (req.method === "GET") {
 
@@ -47,11 +44,6 @@ try {
                 error: "Chýba ID chatu."
             });
         }
-
-        /*
-         * Overíme, že používateľ patrí
-         * do daného chatu.
-         */
 
         const conversation = await sql`
             SELECT id
@@ -70,29 +62,19 @@ try {
             });
         }
 
-        /*
-         * Načítame iba správy z daného chatu.
-         * Správy staršie ako 24 hodín už boli
-         * automaticky vymazané vyššie.
-         */
-
         const messages = await sql`
             SELECT
                 id,
                 sender_id,
                 message,
                 created_at,
-
                 CASE
                     WHEN sender_id = ${userId}
                     THEN true
                     ELSE false
                 END AS is_mine
-
             FROM messages
-
             WHERE conversation_id = ${conversationId}
-
             ORDER BY created_at ASC
         `;
 
@@ -102,24 +84,27 @@ try {
     }
 
 
-    /* =========================
-       ODOSLANIE SPRÁVY
-    ========================= */
+    /*
+     * ODOSLANIE SPRÁVY
+     */
 
     if (req.method === "POST") {
 
-        const {
-            conversationId,
-            message
-        } = req.body;
+        const { conversationId, message } = req.body || {};
 
-        if (!conversationId || !message) {
+        if (!conversationId) {
+            return res.status(400).json({
+                error: "Chýba ID chatu."
+            });
+        }
+
+        if (!message) {
             return res.status(400).json({
                 error: "Správa nemôže byť prázdna."
             });
         }
 
-        const cleanMessage = message.trim();
+        const cleanMessage = String(message).trim();
 
         if (!cleanMessage) {
             return res.status(400).json({
@@ -133,8 +118,9 @@ try {
             });
         }
 
+
         /*
-         * Overíme, že používateľ patrí
+         * Overíme, či používateľ patrí
          * do daného chatu.
          */
 
@@ -155,8 +141,9 @@ try {
             });
         }
 
+
         /*
-         * Uložíme novú správu.
+         * Uložíme správu.
          */
 
         const result = await sql`
@@ -189,7 +176,7 @@ try {
 
 } catch (error) {
 
-    console.error(error);
+    console.error("MESSAGE API ERROR:", error);
 
     return res.status(500).json({
         error: "Nepodarilo sa pracovať so správami."
