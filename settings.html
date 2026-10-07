@@ -168,6 +168,69 @@
             background: #c52d56;
         }
 
+        /* ==================================
+           BLOKOVANÍ POUŽÍVATELIA
+        ================================== */
+
+        .blocked-user {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            padding: 12px;
+            margin-top: 10px;
+            background: white;
+            border-radius: 14px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+        }
+
+        .blocked-user-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 0;
+        }
+
+        .blocked-user-info strong {
+            display: block;
+            word-break: break-word;
+        }
+
+        .blocked-user-info small {
+            display: block;
+            margin-top: 3px;
+            color: #888;
+        }
+
+        .blocked-user-avatar {
+            width: 45px;
+            height: 45px;
+            min-width: 45px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .blocked-user-avatar.placeholder {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #ffdce8;
+            font-size: 22px;
+        }
+
+        .unblock-button {
+            width: auto;
+            min-width: 105px;
+            margin-top: 0;
+            padding: 9px 14px;
+            background: #ff8fb3;
+            font-size: 14px;
+        }
+
+        .unblock-button:hover {
+            background: #ff719f;
+        }
+
         @media (max-width: 600px) {
 
             nav {
@@ -192,6 +255,15 @@
 
             .logo {
                 font-size: 18px;
+            }
+
+            .blocked-user {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .unblock-button {
+                width: 100%;
             }
 
         }
@@ -239,7 +311,7 @@
 
         <!-- ==================================
              SÚKROMIE
-        =================================== -->
+        ================================== -->
 
         <div class="setting">
 
@@ -314,7 +386,7 @@
 
         <!-- ==================================
              UPOZORNENIA
-        =================================== -->
+        ================================== -->
 
         <div class="setting">
 
@@ -389,7 +461,7 @@
 
         <!-- ==================================
              BLOKOVANÍ POUŽÍVATELIA
-        =================================== -->
+        ================================== -->
 
         <div class="setting">
 
@@ -414,9 +486,11 @@
                 class="privacy-options"
             >
 
-                <p>
-                    Zatiaľ nemáš žiadnych blokovaných používateľov.
+                <p id="blockedLoading">
+                    Načítavam blokovaných používateľov...
                 </p>
+
+                <div id="blockedUsersList"></div>
 
             </div>
 
@@ -425,7 +499,7 @@
 
         <!-- ==================================
              NAHLÁSENIE PROBLÉMU
-        =================================== -->
+        ================================== -->
 
         <div class="setting">
 
@@ -496,7 +570,7 @@
 
         <!-- ==================================
              ÚČET
-        =================================== -->
+        ================================== -->
 
         <div class="setting">
 
@@ -521,7 +595,7 @@
 
         <!-- ==================================
              ODHLÁSENIE
-        =================================== -->
+        ================================== -->
 
         <button
             class="logout"
@@ -754,15 +828,27 @@ function saveNotifications() {
    BLOKOVANÍ
 ================================== */
 
-function showBlockedUsers() {
+async function showBlockedUsers() {
 
     const box =
         document.getElementById(
             "blockedUsers"
         );
 
+    const list =
+        document.getElementById(
+            "blockedUsersList"
+        );
 
-    if (box.style.display === "block") {
+    const loading =
+        document.getElementById(
+            "blockedLoading"
+        );
+
+
+    if (
+        box.style.display === "block"
+    ) {
 
         box.style.display = "none";
 
@@ -772,6 +858,219 @@ function showBlockedUsers() {
 
 
     box.style.display = "block";
+
+    loading.style.display = "block";
+
+    list.innerHTML = "";
+
+
+    try {
+
+        const response =
+            await fetch("/api/blocks");
+
+
+        const data =
+            await response.json();
+
+
+        loading.style.display = "none";
+
+
+        if (!response.ok) {
+
+            list.innerHTML = `
+                <p>
+                    ${escapeBlockedText(
+                        data.error ||
+                        "Nepodarilo sa načítať blokovaných používateľov."
+                    )}
+                </p>
+            `;
+
+            return;
+
+        }
+
+
+        if (
+            !data.blockedUsers ||
+            data.blockedUsers.length === 0
+        ) {
+
+            list.innerHTML = `
+                <p>
+                    Zatiaľ nemáš žiadnych blokovaných používateľov.
+                </p>
+            `;
+
+            return;
+
+        }
+
+
+        data.blockedUsers.forEach(function(user) {
+
+            const item =
+                document.createElement("div");
+
+
+            item.className =
+                "blocked-user";
+
+
+            const avatar =
+                user.profile_image
+                    ? `
+                        <img
+                            src="${escapeBlockedText(user.profile_image)}"
+                            class="blocked-user-avatar"
+                            alt="Profilová fotka"
+                        >
+                    `
+                    : `
+                        <div class="blocked-user-avatar placeholder">
+                            👤
+                        </div>
+                    `;
+
+
+            item.innerHTML = `
+
+                <div class="blocked-user-info">
+
+                    ${avatar}
+
+                    <div>
+
+                        <strong>
+                            ${escapeBlockedText(
+                                user.username
+                            )}
+                        </strong>
+
+                        <small>
+                            ${escapeBlockedText(
+                                user.class_name || ""
+                            )}
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="unblock-button"
+                    onclick="unblockUser('${escapeBlockedText(user.id)}')"
+                >
+                    Odblokovať
+                </button>
+
+            `;
+
+
+            list.appendChild(item);
+
+        });
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        loading.style.display = "none";
+
+        list.innerHTML = `
+            <p>
+                Nepodarilo sa spojiť so serverom.
+            </p>
+        `;
+
+    }
+
+}
+
+
+async function unblockUser(userId) {
+
+    const confirmed =
+        confirm(
+            "Naozaj chceš tohto používateľa odblokovať?"
+        );
+
+
+    if (!confirmed) {
+        return;
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/blocks?user=" +
+                encodeURIComponent(userId),
+                {
+                    method: "DELETE"
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            alert(
+                data.error ||
+                "Nepodarilo sa odblokovať používateľa."
+            );
+
+            return;
+
+        }
+
+
+        alert(
+            "Používateľ bol odblokovaný."
+        );
+
+
+        /* Znovu načítame zoznam */
+
+        const box =
+            document.getElementById(
+                "blockedUsers"
+            );
+
+        box.style.display = "none";
+
+        await showBlockedUsers();
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert(
+            "Nepodarilo sa spojiť so serverom."
+        );
+
+    }
+
+}
+
+
+function escapeBlockedText(text) {
+
+    return String(text || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
 
 }
 
@@ -905,7 +1204,6 @@ function logout() {
 loadPrivacy();
 
 loadNotifications();
-
 
 </script>
 
